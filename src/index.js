@@ -1,13 +1,8 @@
 const fs = require("fs");
 
 module.exports = class database {
-
-   
-    constructor(filePath){
-
+    constructor(filePath) {
         this.jsonFilePath = filePath || "./db.json";
-
-    
         this.data = {};
 
         if(!fs.existsSync(this.jsonFilePath)){
@@ -17,44 +12,41 @@ module.exports = class database {
         }
     }
 
-   
-    fetchDataFromFile(){
-        const savedData = JSON.parse(fs.readFileSync(this.jsonFilePath));
-        if(typeof savedData === "object"){
-            this.data = savedData;
-        }
+    fetchDataFromFile() {
+        let savedData;
+
+        try {
+          savedData = JSON.parse(fs.readFileSync(this.jsonFilePath));
+        } catch(error) {}
+
+        this.data = savedData;
     }
 
-   
-    saveDataToFile(){
+    saveDataToFile() {
         fs.writeFileSync(this.jsonFilePath, JSON.stringify(this.data, null, 2), "utf-8");
     }
 
-  
-    get(key){
+    get(key) {
         return this.data[key];
     }
 
-   fetch(key){
+    fetch(key) {
         return this.data[key];
     }
 
-    has(key){
+    has(key) {
         return Boolean(this.data[key]);
     }
-    
 
-    set(key, value){
+    set(key, value) {
         this.data[key] = value;
         this.saveDataToFile();
     }
 
-   
-    delete(key){
+    delete(key) {
         delete this.data[key];
         this.saveDataToFile();
     }
-
 
     sum(key, count){
         if(!this.data[key]) this.data[key] = 0;
@@ -62,24 +54,22 @@ module.exports = class database {
         this.saveDataToFile();
     }
 
-
-    sub(key, count){
+    sub(key, count) {
         if(!this.data[key]) this.data[key] = 0;
         this.data[key] -= count;
         this.saveDataToFile();
     }
 
- 
-    push(key, element){
+    push(key, element) {
         if (!this.data[key]) this.data[key] = [];
         this.data[key].push(element);
         this.saveDataToFile();
     }
 
 
-    clear(){
+    clear() {
         this.data = {};
         this.saveDataToFile();
     }
-
 };
+
