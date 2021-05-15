@@ -48,15 +48,23 @@ module.exports = class database {
         this.saveDataToFile();
     }
 
-    sum(key, count){
-        if(!this.data[key]) this.data[key] = 0;
-        this.data[key] += count;
+    sum(key, count) {
+        if (!this.data[key]) {
+          this.data[key] = count;
+        } else {
+          this.data[key] += count;
+        }
+
         this.saveDataToFile();
     }
 
     sub(key, count) {
-        if(!this.data[key]) this.data[key] = 0;
-        this.data[key] -= count;
+        if (!this.data[key]) {
+          this.data[key] = -count;
+        } else {
+          this.data[key] -= count;
+        }
+
         this.saveDataToFile();
     }
 
