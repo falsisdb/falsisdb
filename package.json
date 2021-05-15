@@ -1,10 +1,9 @@
 {
   "name": "falsisdb",
-  "version": "1.5.0",
-  "description": "npmjs için basit kullanımlı database modülüm",
-  "main": "src/index.js",
-  "dependencies": {
-  },
+  "version": "2.0.1",
+  "description": "npmjs için basit kullanımlı database modülü",
+  "main": "./src/index.js",
+  "dependencies": {},
   "keywords": [
     "db",
     "database",
@@ -18,5 +17,17 @@
     "mongodb"
   ],
   "author": "falsis",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/falsisdev/falsisdb.git"
+  },
+  "bugs": {
+    "url": "https://github.com/falsisdev/falsisdb/issues"
+  },
+  "homepage": "https://github.com/falsisdev/falsisdb#readme",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
 }
