@@ -3,6 +3,7 @@
   "version": "2.0.1",
   "description": "npmjs için basit kullanımlı database modülü",
   "main": "./src/index.js",
+  "types": "./src/index.d.ts",
   "keywords": [
     "db",
     "database",
