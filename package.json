@@ -3,7 +3,7 @@
   "version": "2.0.1",
   "description": "npmjs için basit kullanımlı database modülü",
   "main": "./src/index.js",
-  "dependencies": {},
+  "types": "./src/index.d.ts",
   "keywords": [
     "db",
     "database",
@@ -25,9 +25,6 @@
   "bugs": {
     "url": "https://github.com/falsisdev/falsisdb/issues"
   },
-  "homepage": "https://github.com/falsisdev/falsisdb#readme",
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  }
+  "homepage": "https://github.com/falsisdev/falsisdb#readme"
 }
+
