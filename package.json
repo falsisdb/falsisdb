@@ -4,8 +4,6 @@
   "description": "npmjs için basit kullanımlı database modülüm",
   "main": "module/index.js",
   "dependencies": {
-    "discord.js": "^12.5.3",
-    "fs": "^0.0.1-security"
   },
   "devDependencies": {},
   "scripts": {
