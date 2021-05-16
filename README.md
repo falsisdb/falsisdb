@@ -5,8 +5,8 @@ npmjs için basit kullanımlı database modülü
 
 *kod*
 ```js
-const falsisdb = require("falsisdb"); //indirme
-const db = new falsisdb("./database.json"); //database dosyasını tanımlama
+const falsisdb = require("falsisdb"); // indirme
+const db = new falsisdb("./database.json"); // database dosyasını tanımlama, dosya tanımlarken başına ./ konulmak zorundadır.
 ```
 *konsoldan indirme*
 ```js
@@ -27,3 +27,4 @@ db.set("array", [ "elma" ]);
 db.push("array", "portakal"); 
 db.clear(); // Değişken temizleme (hepsini)
 ```
+
