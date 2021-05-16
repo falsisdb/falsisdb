@@ -1,12 +1,37 @@
 const fs = require("fs");
 
+const writeFileWithDirs = ((data, path) => {
+    const dirs = path.split("/").slice(1, -1);
+
+    if (dirs.length === 0) {
+        fs.writeFileSync(path, data, "utf-8");
+    } else {
+        const dirsLength = dirs.length;
+        const processedDirs = [];
+        let i = 0;
+
+        while (i < dirsLength) {
+            processedDirs.push(dirs[i]);
+            const currentPath = `./${processedDirs.join("/")}`;
+
+            if (!fs.existsSync(currentPath) || !fs.lstatSync(currentPath).isDirectory()) {
+                fs.mkdirSync(currentPath);
+            }
+
+            i++;
+        }
+
+        fs.writeFileSync(path, data, "utf-8");
+    }
+});
+
 module.exports = class database {
     constructor(filePath) {
         this.jsonFilePath = filePath || "./db.json";
         this.data = {};
 
-        if(!fs.existsSync(this.jsonFilePath)){
-            fs.writeFileSync(this.jsonFilePath, "{}", "utf-8");
+        if (!fs.existsSync(this.jsonFilePath) || !fs.lstatSync(this.jsonFilePath).isFile()) {
+            writeFileWithDirs("{}", this.jsonFilePath);
         } else {
             this.fetchDataFromFile();
         }
@@ -23,7 +48,7 @@ module.exports = class database {
     }
 
     saveDataToFile() {
-        fs.writeFileSync(this.jsonFilePath, JSON.stringify(this.data, null, 2), "utf-8");
+        writeFileWithDirs(JSON.stringify(this.data, null, 2), this.jsonFilePath);
     }
 
     get(key) {
