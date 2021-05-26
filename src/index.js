@@ -73,9 +73,48 @@ module.exports = class database {
         this.saveDataToFile();
     }
 
-    sum(key, count) {
+    conc(key, count) {
         if (!this.data[key]) {
           this.data[key] = count;
+        } else {
+          this.data[key] += count.toString();
+        }
+
+        this.saveDataToFile();
+    }
+
+    multi(key, count) {
+        if(isNaN(this.data[key]) == true){
+            return("Lütfen bir sayı belirtin.")
+        }
+        if (!this.data[key]) {
+          this.data[key] = count;
+        } else {
+          this.data[key] *= count;
+        }
+
+        this.saveDataToFile();
+    }
+
+    divide(key, count) {
+        if(isNaN(this.data[key]) == true){
+            return("Lütfen bir sayı belirtin.")
+        }
+        if (!this.data[key]) {
+          this.data[key] = count;
+        } else {
+          this.data[key] /= count;
+        }
+
+        this.saveDataToFile();
+    }
+
+    sum(key, count) {
+        if(isNaN(this.data[key]) == true){
+            return("Lütfen bir sayı belirtin.")
+        }
+        if (!this.data[key]) {
+          this.data[key] = +count;
         } else {
           this.data[key] += count;
         }
@@ -84,6 +123,9 @@ module.exports = class database {
     }
 
     sub(key, count) {
+        if(isNaN(this.data[key]) == true){
+            return("Lütfen bir sayı belirtin.")
+        }
         if (!this.data[key]) {
           this.data[key] = -count;
         } else {

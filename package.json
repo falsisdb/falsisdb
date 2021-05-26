@@ -1,6 +1,6 @@
 {
   "name": "falsisdb",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "npmjs için basit kullanımlı database modülü",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
@@ -25,6 +25,13 @@
   "bugs": {
     "url": "https://github.com/falsisdev/falsisdb/issues"
   },
-  "homepage": "https://github.com/falsisdev/falsisdb#readme"
+  "homepage": "https://github.com/falsisdev/falsisdb#readme",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "fs": "^0.0.1-security"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
 }
-

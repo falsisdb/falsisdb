@@ -1,5 +1,5 @@
 # Falsis-DB
-npmjs için basit kullanımlı database modülü
+NPMJS için quick.db benzeri kolay kullanılabilir Türkçe Database Modülü
 
 # Kullanım
 
@@ -27,4 +27,3 @@ db.set("array", [ "elma" ]);
 db.push("array", "portakal"); 
 db.clear(); // Değişken temizleme (hepsini)
 ```
-
