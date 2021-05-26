@@ -23,6 +23,11 @@ db.has("Deneme"); // false || true - Değişken Var mı?
 db.fetch("Deneme"); // Değişken getirme
 db.sum("yaş", 31); // Değişken ekleme
 db.sub("yaş", 14); // Değişken çıkarma
+db.multi("deneme", 2) //deneme değişkeni 2 ile çarpılır.
+db.divide("deneme", 2) //deneme değişkeni 2'ye bölünür
+db.conc("deneme", 2) //deneme değişkenine 2 değerini koyar.
+/*Çıktı:
+deneme2*/
 db.set("array", [ "elma" ]);
 db.push("array", "portakal"); 
 db.clear(); // Değişken temizleme (hepsini)
