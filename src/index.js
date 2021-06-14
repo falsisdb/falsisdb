@@ -50,7 +50,15 @@ module.exports = class database {
     saveDataToFile() {
         writeFileWithDirs(JSON.stringify(this.data, null, 2), this.jsonFilePath);
     }
-
+    
+    on(fonksiyon , config){
+    if(fonksiyon=="ready"){
+    let message;
+    if(config.message){
+    message = config.message
+    console.log(message)}else{
+    console.log("Falsisdb Başlatıldı")
+    }
     get(key) {
         return this.data[key];
     }
