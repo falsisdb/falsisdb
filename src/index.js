@@ -158,6 +158,9 @@ module.exports = class database {
     }
     
     sqrt(sayi) {
+        if(isNaN(sayi) == true) {
+            return("Lütfen karekökünü bulmak istediğiniz geçerli bir sayı giriniz")
+        }
     if(!sayi) {
     throw new TypeError("Lütfen karekökünü bulmak istediğiniz sayıyı giriniz.")
 }else{
