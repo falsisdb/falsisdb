@@ -50,6 +50,14 @@ module.exports = class database {
     saveDataToFile() {
         writeFileWithDirs(JSON.stringify(this.data, null, 2), this.jsonFilePath);
     }
+    
+    on(fonksiyon , config){
+    if(fonksiyon=="ready"){
+    let message;
+    if(config.message){
+    message = config.message
+    console.log(message)}
+    else throw Error("Ready Message İs Undefined")}}
 
     get(key) {
         return this.data[key];
