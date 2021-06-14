@@ -158,7 +158,11 @@ module.exports = class database {
         if(islem=="-") {
         return sayı - sayı2}       
         if(islem=="*") {
-        return sayı * sayı2}   
+        return sayı * sayı2}
+        if(islem==":") {
+        return sayı / sayı2}
+        if(islem=="x") {
+        return sayı / sayı2}
         if(islem=="/") {
         return sayı / sayı2}
         else {
