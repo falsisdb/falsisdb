@@ -149,8 +149,7 @@ module.exports = class database {
     
     sqrt(sayi) {
     if(!sayi) {
-    return("Lütfen karekökünü bulmak istediğiniz sayıyı giriniz.")
-}else {
+    throw new TypeError("Lütfen karekökünü bulmak istediğiniz sayıyı giriniz.")
 return Math.sqrt(sayi)
 }
 };
