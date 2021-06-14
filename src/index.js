@@ -157,13 +157,9 @@ module.exports = class database {
         return sayı + sayı2}     
         if(islem=="-") {
         return sayı - sayı2}       
-        if(islem=="*") {
+        if(islem=="*" || islem=="x" || islem=="X"){
         return sayı * sayı2}
-        if(islem==":") {
-        return sayı / sayı2}
-        if(islem=="x") {
-        return sayı / sayı2}
-        if(islem=="/") {
+        if(islem=="/" || islem==":") {
         return sayı / sayı2}
         else {
         throw Error("Tanımsız İşlem!")}}
