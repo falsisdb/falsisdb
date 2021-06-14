@@ -56,9 +56,9 @@ module.exports = class database {
     let message;
     if(config.message){
     message = config.message
-    console.log(message)}
-    else throw Error("Ready Message İs Undefined")}}
-
+    console.log(message)}else{
+    console.log("Falsisdb Başlatıldı")
+    }
     get(key) {
         return this.data[key];
     }
