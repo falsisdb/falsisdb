@@ -147,6 +147,13 @@ module.exports = class database {
         this.saveDataToFile();
     }
     
+    sqrt(sayi) {
+    if(!sayi) {
+    return("Lütfen karekökünü bulmak istediğiniz sayıyı giriniz.")
+}else {
+return Math.sqrt(sayi)
+}
+};
        math(key , islem , key2) {
         if(!key) throw TypeError("Birinci Sayıyı Gir!")
         if(!key2) throw TypeError("İkinci Sayıyı Gir!")
