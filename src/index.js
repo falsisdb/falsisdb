@@ -164,10 +164,10 @@ module.exports = class database {
 return Math.sqrt(sayi)
 }
 };
-       math(key , islem , key2) {
-        if(!key) throw TypeError("Birinci Sayıyı Gir!")
-        if(!key2) throw TypeError("İkinci Sayıyı Gir!")
-        if(!islem) throw TypeError("İşlemi Gir!")
+math(key , islem , key2) {
+        if(!key) throw new TypeError("Birinci Sayıyı Gir!")
+        if(!key2) throw new TypeError("İkinci Sayıyı Gir!")
+        if(!islem) throw new TypeError("İşlemi Gir!")
         let sayı = parseInt(key)
         let sayı2 = parseInt(key2)       
         if(islem=="+") {
