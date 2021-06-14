@@ -59,6 +59,8 @@ module.exports = class database {
     console.log(message)}else{
     console.log("Falsisdb Başlatıldı")
     }
+}
+    }
     get(key) {
         return this.data[key];
     }
