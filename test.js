@@ -1,6 +1,4 @@
 const falsis = require("./src/index.js")
 const db = new falsis('./database.json')
-db.set("sa", 12);
-db.conc("sa", 2)
-let sj = db.get("sa")
-console.log(sj)
+console.log(db.sqrt(81))
+//Bunu yazan tosun (falsis eheheu) okuyanın amna kosun
