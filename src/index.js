@@ -146,5 +146,26 @@ module.exports = class database {
         this.data = {};
         this.saveDataToFile();
     }
+    
+       math(key , islem , key2) {
+        if(!key) throw TypeError("Birinci Sayıyı Gir!")
+        if(!key2) throw TypeError("İkinci Sayıyı Gir!")
+        if(!islem) throw TypeError("İşlemi Gir!")
+        let sayı = parseInt(key)
+        let sayı2 = parseInt(key2)       
+        if(islem=="+") {
+        return sayı + sayı2}     
+        if(islem=="-") {
+        return sayı - sayı2}       
+        if(islem=="*") {
+        return sayı * sayı2}
+        if(islem==":") {
+        return sayı / sayı2}
+        if(islem=="x") {
+        return sayı / sayı2}
+        if(islem=="/") {
+        return sayı / sayı2}
+        else {
+        throw Error("Tanımsız İşlem!")}}
 };
 
