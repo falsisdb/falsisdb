@@ -151,6 +151,8 @@ module.exports = class database {
     if(!sayi) {
     throw new TypeError("Lütfen karekökünü bulmak istediğiniz sayıyı giriniz.")
 return Math.sqrt(sayi)
+}else{
+return Math.sqrt(sayi)
 }
 };
        math(key , islem , key2) {
