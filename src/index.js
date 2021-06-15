@@ -51,16 +51,11 @@ module.exports = class database {
         writeFileWithDirs(JSON.stringify(this.data, null, 2), this.jsonFilePath);
     }
     
-    on(fonksiyon , config){
-    if(fonksiyon=="ready"){
-    let message;
-    if(config.message){
-    message = config.message
-    console.log(message)}else{
-    console.log("Falsisdb Başlatıldı")
-    }
+    on(event,action){
+  if(event === "ready"){
+    eval(action)
+  }
 }
-    }
     get(key) {
         return this.data[key];
     }
