@@ -184,3 +184,11 @@ math(key , islem , key2) {
         throw Error("Tanımsız İşlem!")}}
 };
 
+        sin(key){
+            return Math.sin(key)
+        }
+
+        cos(key){
+            return Math.cos(key)
+        }
+
