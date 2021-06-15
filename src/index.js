@@ -185,10 +185,12 @@ math(key , islem , key2) {
 };
 
         sin(key){
+            if(!key) throw Error("sinüs değerini gir!")
             return Math.sin(key)
         }
 
         cos(key){
+            if(!key) throw Error("cosinüs değerini gir!")
             return Math.cos(key)
         }
 
