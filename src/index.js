@@ -1,5 +1,8 @@
 const fs = require("fs");
-
+let addfunc;
+let clearfunc;
+let setfunc;
+let deletefunc;
 const writeFileWithDirs = ((data, path) => {
     const dirs = path.split("/").slice(1, -1);
 
@@ -55,6 +58,18 @@ module.exports = class database {
   if(event === "ready"){
     eval(action)
   }
+  if(event === "dataAdd"){
+   addfunc = action   //dataAdd event created by lunex
+  }
+        if(event === "dataClear"){
+   clearfunc = action   //dataClear event created by falsis
+  }
+         if(event === "dataSet"){
+   setfunc = action   //dataSet event created by falsis
+  }
+        if(event === "dataDelete"){
+   deletefunc = action   //dataDelete event created by falsis
+  }
 }
     get(key) {
         if(!key) throw Error("Getirilicek Veriyi Gir!")
@@ -76,12 +91,18 @@ module.exports = class database {
         if(!value) throw Error("Değişicek Veriyi Gir!")
         this.data[key] = value;
         this.kaydet();
+                        if(setfunc){ 
+        eval(setfunc)  //dataSet event created by falsis
+                        }
     }
 
     delete(key) {
         if(!key) throw Error("Silinicek Veriyi Gir!")  
         delete this.data[key];
         this.kaydet();
+                                if(deletefunc){ 
+        eval(deletefunc)  //dataSet event created by falsis
+                        }
     }
 
     conc(key, count) {
@@ -94,6 +115,9 @@ module.exports = class database {
         }
 
         this.kaydet();
+                        if(addfunc){ 
+        eval(addfunc)  //dataAdd event created by lunex
+        }
     }
 
     multi(key, count) {
@@ -168,6 +192,9 @@ module.exports = class database {
     clear() {
         this.data = {};
         this.kaydet();
+                if(clearfunc){ 
+        eval(clearfunc)  //dataClear event created by falsis
+        }
     }
     
     sqrt(sayi) {
@@ -198,47 +225,8 @@ math(key , islem , key2) {
         return sayı / sayı2}
         else {
         throw Error("Tanımsız İşlem!")}}
-
-        sin(key){
-            if(!key) throw Error("sinüs değerini gir!")
-            return Math.sin(key)
-        }
-
-        cos(key){
-            if(!key) throw Error("cosinüs değerini gir!")
-            return Math.cos(key)
-        }
-
-        pi(){
-            return Math.PI()
-        }
-           
-        euler(){
-            return Math.E
-        }
-
-        rastgale(key){
+        random(key){
             if(!key) throw Error("Max Kaç Olubileceğini Gir!")
             return Math.floor((Math.random() * key) + 1);
-        }
-
-        mutlak(key){
-            if(!key) throw Error("Mutlak Değere Çevrilcek Değeri Gir!")
-            return Math.abs(key)
-        }
-
-        yuvarla(key){
-            if(!key) throw Error("Yuvarlanacak Değeri Gir!")
-            return Math.round(key)
-        }
-
-        kare(key){
-            if(!key) throw Error("Karesi Alınıcak Değeri Gir!")
-            return key * key
-        }
-            
-        log(key){
-            if(!key) throw Error("Logaritma Değerini Gir!")
-            return Math.log(key)
         }
 }
