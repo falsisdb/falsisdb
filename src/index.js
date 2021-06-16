@@ -1,4 +1,5 @@
 const fs = require("fs");
+let addfunc;
 
 const writeFileWithDirs = ((data, path) => {
     const dirs = path.split("/").slice(1, -1);
@@ -55,6 +56,9 @@ module.exports = class database {
   if(event === "ready"){
     eval(action)
   }
+  if(event === "dataAdd"){
+   addfunc = action   //dataAdd event created by lunex
+  }
 }
     get(key) {
         if(!key) throw Error("Getirilicek Veriyi Gir!")
@@ -94,6 +98,9 @@ module.exports = class database {
         }
 
         this.kaydet();
+        if(addfunc){ 
+        eval(addfunc)  //dataAdd event created by lunex
+        }
     }
 
     multi(key, count) {
