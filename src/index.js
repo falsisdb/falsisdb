@@ -57,28 +57,36 @@ module.exports = class database {
   }
 }
     get(key) {
+        if(!key) throw Error("Getirilicek Veriyi Gir!")
         return this.data[key];
     }
 
     fetch(key) {
+        if(!key) throw Error("Getirilicek Veriyi Gir!")
         return this.data[key];
     }
 
     has(key) {
+        if(!key) throw Error("Şartlanacak Veriyi Gir!")
         return Boolean(this.data[key]);
     }
 
     set(key, value) {
+        if(!key) throw Error("Değiştirilicek Veriyi Gir!")
+        if(!value) throw Error("Değişicek Veriyi Gir!")
         this.data[key] = value;
         this.saveDataToFile();
     }
 
     delete(key) {
+        if(!key) throw Error("Silinicek Veriyi Gir!")  
         delete this.data[key];
         this.saveDataToFile();
     }
 
     conc(key, count) {
+        if(!key) throw Error("Ekleme Yapılacak Veriyi Gir!")
+        if(!count) throw Error("Eklenecek Veriyi Gir!")
         if (!this.data[key]) {
           this.data[key] = count;
         } else {
@@ -89,6 +97,8 @@ module.exports = class database {
     }
 
     multi(key, count) {
+        if(!key) throw Error("Silinme Yapılacak Veriyi Gir!")
+        if(!count) throw Error("Silinecek Veriyi Gir!")
         if(isNaN(this.data[key]) == true){
             return("Lütfen bir sayı belirtin.")
         }
@@ -102,6 +112,8 @@ module.exports = class database {
     }
 
     divide(key, count) {
+        if(!key) throw Error("Bölünme Yapılacak Veriyi Gir!")
+        if(!count) throw Error("Bölünecek Veriyi Gir!")
         if(isNaN(this.data[key]) == true){
             return("Lütfen bir sayı belirtin.")
         }
@@ -115,6 +127,8 @@ module.exports = class database {
     }
 
     sum(key, count) {
+        if(!key) throw Error("Ekleme Yapılacak Veriyi Gir!")
+        if(!count) throw Error("Eklenecek Veriyi Gir!")
         if(isNaN(this.data[key]) == true){
             return("Lütfen bir sayı belirtin.")
         }
@@ -128,6 +142,8 @@ module.exports = class database {
     }
 
     sub(key, count) {
+        if(!key) throw Error("Çıkarma Yapılacak Veriyi Gir!")
+        if(!count) throw Error("Çıkarılıcak Veriyi Gir!")
         if(isNaN(this.data[key]) == true){
             return("Lütfen bir sayı belirtin.")
         }
@@ -141,6 +157,8 @@ module.exports = class database {
     }
 
     push(key, element) {
+        if(!key) throw Error("Array Adını Gir!")
+        if(!element) throw Error("Array Verisini Gir!")
         if (!this.data[key]) this.data[key] = [];
         this.data[key].push(element);
         this.saveDataToFile();
