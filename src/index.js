@@ -225,4 +225,8 @@ math(key , islem , key2) {
         return sayı / sayı2}
         else {
         throw Error("Tanımsız İşlem!")}}
+        random(key){
+            if(!key) throw Error("Max Kaç Olubileceğini Gir!")
+            return Math.floor((Math.random() * key) + 1);
+        }
 }
