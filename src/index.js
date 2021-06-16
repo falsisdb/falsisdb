@@ -1,8 +1,8 @@
 const fs = require("fs");
-let addfunc;
-let clearfunc;
-let setfunc;
-let deletefunc;
+let check;
+let dataCode;
+let deleteEventCheck;
+let deleteEventCode;
 const writeFileWithDirs = ((data, path) => {
     const dirs = path.split("/").slice(1, -1);
 
@@ -54,23 +54,22 @@ module.exports = class database {
         writeFileWithDirs(JSON.stringify(this.data, null, 2), this.jsonFilePath);
     }
     
-    on(event,action){
-  if(event === "ready"){
-    eval(action)
-  }
-  if(event === "dataAdd"){
-   addfunc = action   //dataAdd event created by lunex
-  }
-        if(event === "dataClear"){
-   clearfunc = action   //dataClear event created by falsis
-  }
-         if(event === "dataSet"){
-   setfunc = action   //dataSet event created by falsis
-  }
-        if(event === "dataDelete"){
-   deletefunc = action   //dataDelete event created by falsis
-  }
-}
+    
+    on(event = {
+      type: new String(),
+      status: new String(),
+      code: new String()
+    }) {
+      if(event.type === "ready" && event.status === "aktif"){
+        eval(event.code)
+      } else if(event.type === "dataSet" && event.status === "aktif"){
+        check = true;
+        dataCode = event.code;
+      } else if(event.type === "dataDelete" && event.status === "aktif"){
+       deleteEventCheck = true
+       deleteEventCode = event.code
+      }
+    } 
     get(key) {
         if(!key) throw Error("Getirilicek Veriyi Gir!")
         return this.data[key];
@@ -91,18 +90,18 @@ module.exports = class database {
         if(!value) throw Error("Değişicek Veriyi Gir!")
         this.data[key] = value;
         this.kaydet();
-                        if(setfunc){ 
-        eval(setfunc)  //dataSet event created by falsis
-                        }
+          if(check === true){
+          eval(dataCode)
+        }
     }
 
     delete(key) {
         if(!key) throw Error("Silinicek Veriyi Gir!")  
         delete this.data[key];
         this.kaydet();
-                                if(deletefunc){ 
-        eval(deletefunc)  //dataSet event created by falsis
-                        }
+          if(deleteEventCheck === true){
+          eval(deleteEventCode)
+        }
     }
 
     conc(key, count) {
