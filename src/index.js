@@ -4,6 +4,9 @@ let check;
 let dataCode;
 let deleteEventCheck;
 let deleteEventCode;
+let data;
+let type;
+
 const writeFileWithDirs = ((data, path) => {
     const dirs = path.split("/").slice(1, -1);
 
@@ -71,18 +74,7 @@ module.exports = class database {
        deleteEventCode = event.code
       }
     } 
-        get info(){
-        return{
-            name: "falsisdb",
-            type:"database",
-            version: "2.1.5",
-            owner: "falsisdev",
-            developers: ["falsisdev", "lunexdev", "berat141"],
-            github: "https://github.com/falsisdev/falsisdb",
-            commands: `${Object.entries("./src/index.js").length}`,
-            file: this.jsonFilePath
-        }
-    }
+
     get(key) {
         if(!key) throw Error("Getirilicek Veriyi Gir!")
         return this.data[key];
@@ -103,6 +95,8 @@ module.exports = class database {
         if(!value) throw Error("Değişicek Veriyi Gir!")
         this.data[key] = value;
         this.kaydet();
+        data = value
+        type = "set"
           if(check === true){
           eval(dataCode)
         }
@@ -112,6 +106,8 @@ module.exports = class database {
         if(!key) throw Error("Silinicek Veriyi Gir!")  
         delete this.data[key];
         this.kaydet();
+        data = value
+        type = "delete"
           if(deleteEventCheck === true){
           eval(deleteEventCode)
         }
@@ -127,6 +123,8 @@ module.exports = class database {
         }
 
         this.kaydet();
+        data = count
+        type = "conc"
     }
 
     multi(key, count) {
@@ -140,8 +138,9 @@ module.exports = class database {
         } else {
           this.data[key] *= count;
         }
-
         this.kaydet();
+        data = count
+        type = "multi"
     }
 
     divide(key, count) {
@@ -157,6 +156,8 @@ module.exports = class database {
         }
 
         this.kaydet();
+        data = count
+        type = "divide"
     }
 
     sum(key, count) {
@@ -172,6 +173,8 @@ module.exports = class database {
         }
 
         this.kaydet();
+        data = count
+        type = "sum"
     }
 
     sub(key, count) {
@@ -187,6 +190,8 @@ module.exports = class database {
         }
 
         this.kaydet();
+        data = count
+        type = "sub"
     }
 
     push(key, element) {
@@ -195,6 +200,8 @@ module.exports = class database {
         if (!this.data[key]) this.data[key] = [];
         this.data[key].push(element);
         this.kaydet();
+        data = element
+        type = "push (array)"
     }
 
 
@@ -238,4 +245,18 @@ math(key , islem , key2) {
             if(!key) throw Error("Max Kaç Olubileceğini Gir!")
             return Math.floor((Math.random() * key) + 1);
         }
+    
+     get info(){
+        return{
+            name: "falsisdb",
+            type:"database",
+            version: "2.1.5",
+            owner: "falsisdev",
+            developers: ["falsisdev", "lunexdev", "berat141"],
+            github: "https://github.com/falsisdev/falsisdb",
+            commands: `${Object.entries("./src/index.js").length}`,
+            file: this.jsonFilePath,
+            lastdata: `data: ${data} type: ${type}`
+        }
+    }
 }
