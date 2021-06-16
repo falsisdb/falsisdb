@@ -2,6 +2,7 @@ const fs = require("fs");
 let addfunc;
 let clearfunc;
 let setfunc;
+let deletefunc;
 const writeFileWithDirs = ((data, path) => {
     const dirs = path.split("/").slice(1, -1);
 
@@ -66,6 +67,9 @@ module.exports = class database {
          if(event === "dataSet"){
    setfunc = action   //dataSet event created by falsis
   }
+        if(event === "dataDelete"){
+   deletefunc = action   //dataDelete event created by falsis
+  }
 }
     get(key) {
         if(!key) throw Error("Getirilicek Veriyi Gir!")
@@ -89,12 +93,16 @@ module.exports = class database {
         this.kaydet();
                         if(setfunc){ 
         eval(setfunc)  //dataSet event created by falsis
+                        }
     }
 
     delete(key) {
         if(!key) throw Error("Silinicek Veriyi Gir!")  
         delete this.data[key];
         this.kaydet();
+                                if(deletefunc){ 
+        eval(deletefunc)  //dataSet event created by falsis
+                        }
     }
 
     conc(key, count) {
