@@ -1,6 +1,6 @@
 const fs = require("fs");
 let addfunc;
-
+let clearfunc;
 const writeFileWithDirs = ((data, path) => {
     const dirs = path.split("/").slice(1, -1);
 
@@ -59,6 +59,9 @@ module.exports = class database {
   if(event === "dataAdd"){
    addfunc = action   //dataAdd event created by lunex
   }
+        if(event === "dataClear"){
+   clearfunc = action   //dataClear event created by falsis
+  }
 }
     get(key) {
         if(!key) throw Error("Getirilicek Veriyi Gir!")
@@ -98,7 +101,7 @@ module.exports = class database {
         }
 
         this.kaydet();
-        if(addfunc){ 
+                        if(addfunc){ 
         eval(addfunc)  //dataAdd event created by lunex
         }
     }
@@ -175,6 +178,9 @@ module.exports = class database {
     clear() {
         this.data = {};
         this.kaydet();
+                if(clearfunc){ 
+        eval(clearfunc)  //dataClear event created by falsis
+        }
     }
     
     sqrt(sayi) {
