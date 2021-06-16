@@ -45,7 +45,7 @@ module.exports = class database {
         } catch(error) {}
 
         this.data = savedData;
-    }
+     }
 
     saveDataToFile() {
         writeFileWithDirs(JSON.stringify(this.data, null, 2), this.jsonFilePath);
@@ -53,9 +53,9 @@ module.exports = class database {
     
     on(event,action){
   if(event === "ready"){
-    eval(action)
-  }
-}
+    eval(action)}
+    }
+    
     get(key) {
         return this.data[key];
     }
@@ -156,13 +156,13 @@ module.exports = class database {
         if(isNaN(sayi) == true) {
             return("Lütfen karekökünü bulmak istediğiniz geçerli bir sayı giriniz")
         }
-    if(!sayi) {
-    throw new TypeError("Lütfen karekökünü bulmak istediğiniz sayıyı giriniz.")
-}else{
-return Math.sqrt(sayi)
-}
-};
-math(key , islem , key2) {
+        if(!sayi) {
+            throw new TypeError("Lütfen karekökünü bulmak istediğiniz sayıyı giriniz.")
+        }else{
+            return Math.sqrt(sayi)
+        }}
+    
+     math(key , islem , key2) {
         if(!key) throw new TypeError("Birinci Sayıyı Gir!")
         if(!key2) throw new TypeError("İkinci Sayıyı Gir!")
         if(!islem) throw new TypeError("İşlemi Gir!")
@@ -182,7 +182,7 @@ math(key , islem , key2) {
         return sayı / sayı2}
         else {
         throw Error("Tanımsız İşlem!")}}
-};
+}
 
         sin(key){
             if(!key) throw Error("sinüs değerini gir!")
