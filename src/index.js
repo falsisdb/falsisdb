@@ -243,7 +243,7 @@ math(key , islem , key2) {
             return Math.pow(key , key2)
         }
             
-        logaritma(key){
+        log(key){
             if(!key) throw Error("Logaritma Değerini Gir!")
             return Math.log(key)
         }
