@@ -232,11 +232,9 @@ math(key , islem , key2) {
             return Math.round(key)
         }
 
-        kare(key , key2){
+        kare(key){
             if(!key) throw Error("Karesi Alınıcak Değeri Gir!")
-            number = parseInt(key)
-            number2 = parseInt(key2)
-            return Math.pow(key , key2)
+            return key * key
         }
             
         log(key){
