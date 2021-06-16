@@ -1,4 +1,5 @@
 const fs = require("fs");
+let clearfunc;
 let check;
 let dataCode;
 let deleteEventCheck;
@@ -114,9 +115,6 @@ module.exports = class database {
         }
 
         this.kaydet();
-                        if(addfunc){ 
-        eval(addfunc)  //dataAdd event created by lunex
-        }
     }
 
     multi(key, count) {
