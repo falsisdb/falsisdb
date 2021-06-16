@@ -47,7 +47,7 @@ module.exports = class database {
         this.data = savedData;
     }
 
-    saveDataToFile() {
+    kaydet() {
         writeFileWithDirs(JSON.stringify(this.data, null, 2), this.jsonFilePath);
     }
     
@@ -75,13 +75,13 @@ module.exports = class database {
         if(!key) throw Error("Değiştirilicek Veriyi Gir!")
         if(!value) throw Error("Değişicek Veriyi Gir!")
         this.data[key] = value;
-        this.saveDataToFile();
+        this.kaydet();
     }
 
     delete(key) {
         if(!key) throw Error("Silinicek Veriyi Gir!")  
         delete this.data[key];
-        this.saveDataToFile();
+        this.kaydet();
     }
 
     conc(key, count) {
@@ -93,7 +93,7 @@ module.exports = class database {
           this.data[key] += count.toString();
         }
 
-        this.saveDataToFile();
+        this.kaydet();
     }
 
     multi(key, count) {
@@ -108,7 +108,7 @@ module.exports = class database {
           this.data[key] *= count;
         }
 
-        this.saveDataToFile();
+        this.kaydet();
     }
 
     divide(key, count) {
@@ -123,7 +123,7 @@ module.exports = class database {
           this.data[key] /= count;
         }
 
-        this.saveDataToFile();
+        this.kaydet();
     }
 
     sum(key, count) {
@@ -138,7 +138,7 @@ module.exports = class database {
           this.data[key] += count;
         }
 
-        this.saveDataToFile();
+        this.kaydet();
     }
 
     sub(key, count) {
@@ -153,7 +153,7 @@ module.exports = class database {
           this.data[key] -= count;
         }
 
-        this.saveDataToFile();
+        this.kaydet();
     }
 
     push(key, element) {
@@ -161,13 +161,13 @@ module.exports = class database {
         if(!element) throw Error("Array Verisini Gir!")
         if (!this.data[key]) this.data[key] = [];
         this.data[key].push(element);
-        this.saveDataToFile();
+        this.kaydet();
     }
 
 
     clear() {
         this.data = {};
-        this.saveDataToFile();
+        this.kaydet();
     }
     
     sqrt(sayi) {
@@ -247,4 +247,3 @@ math(key , islem , key2) {
             if(!key) throw Error("Logaritma Değerini Gir!")
             return Math.log(key)
         }
-
