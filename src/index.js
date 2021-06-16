@@ -71,6 +71,18 @@ module.exports = class database {
        deleteEventCode = event.code
       }
     } 
+        get info(){
+        return{
+            name: "falsisdb",
+            type:"database",
+            version: "2.1.5",
+            owner: "falsisdev",
+            developers: ["falsisdev", "lunexdev", "berat141"],
+            github: "https://github.com/falsisdev/falsisdb",
+            commands: `${Object.entries("./src/index.js").length}`,
+            file: this.jsonFilePath
+        }
+    }
     get(key) {
         if(!key) throw Error("Getirilicek Veriyi Gir!")
         return this.data[key];
