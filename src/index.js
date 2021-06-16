@@ -1,5 +1,8 @@
 const fs = require("fs");
-
+let check;
+let dataCode;
+let deleteEventCheck;
+let deleteEventCode;
 const writeFileWithDirs = ((data, path) => {
     const dirs = path.split("/").slice(1, -1);
 
@@ -51,16 +54,22 @@ module.exports = class database {
         writeFileWithDirs(JSON.stringify(this.data, null, 2), this.jsonFilePath);
     }
     
-    on(fonksiyon , config){
-    if(fonksiyon=="ready"){
-    let message;
-    if(config.message){
-    message = config.message
-    console.log(message)}else{
-    console.log("Falsisdb Başlatıldı")
-    }
-}
-    }
+    
+    on(event = {
+      type: new String(),
+      status: new String(),
+      code: new String()
+    }) {
+      if(event.type === "ready" && event.status === "aktif"){
+        eval(event.code)
+      } else if(event.type === "dataSet" && event.status === "aktif"){
+        check = true;
+        dataCode = event.code;
+      } else if(event.type === "dataDelete" && event.status === "aktif"){
+       deleteEventCheck = true
+       deleteEventCode = event.code
+      }
+    } 
     get(key) {
         return this.data[key];
     }
@@ -76,11 +85,17 @@ module.exports = class database {
     set(key, value) {
         this.data[key] = value;
         this.saveDataToFile();
+        if(check === true){
+          eval(dataCode)
+        }
     }
 
     delete(key) {
         delete this.data[key];
         this.saveDataToFile();
+        if(deleteEventCheck === true){
+          eval(deleteEventCode)
+        }
     }
 
     conc(key, count) {
