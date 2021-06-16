@@ -162,6 +162,7 @@ module.exports = class database {
 return Math.sqrt(sayi)
 }
 };
+    
 math(key , islem , key2) {
         if(!key) throw new TypeError("Birinci Sayıyı Gir!")
         if(!key2) throw new TypeError("İkinci Sayıyı Gir!")
@@ -192,5 +193,40 @@ math(key , islem , key2) {
         cos(key){
             if(!key) throw Error("cosinüs değerini gir!")
             return Math.cos(key)
+        }
+
+        pi(){
+            return Math.PI()
+        }
+           
+        euler(){
+            return Math.E
+        }
+
+        rastgale(key){
+            if(!key) throw Error("Max Kaç Olubileceğini Gir!")
+            return Math.floor((Math.random() * key) + 1);
+        }
+
+        mutlak(key){
+            if(!key) throw Error("Mutlak Değere Çevrilcek Değeri Gir!")
+            return Math.abs(key)
+        }
+
+        yuvarla(key){
+            if(!key) throw Error("Yuvarlanacak Değeri Gir!")
+            return Math.round(key)
+        }
+
+        kare(key , key2){
+            if(!key) throw Error("Karesi Alınıcak Değeri Gir!")
+            number = parseInt(key)
+            number2 = parseInt(key2)
+            return Math.pow(key , key2)
+        }
+            
+        logaritma(key){
+            if(!key) throw Error("Logaritma Değerini Gir!")
+            return Math.log(key)
         }
 
