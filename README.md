@@ -46,5 +46,6 @@ db.on({
 ## Belgeler
 Daha fazla komuta ve örneğe bakmak için [Belgeleri](https://db.falsisdb.ml) ziyaret edebilirsiniz.
 ## FalsisDB
+Teşekkürler: [lunexdev](https://github.com/lunexdev), [berat141](https://github.com/berat141), [aloima](https://github.com/aloima)
 
 <img src="https://cdn.discordapp.com/attachments/831451584034111499/855075597658882058/unknown.png">
