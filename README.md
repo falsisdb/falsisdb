@@ -13,7 +13,7 @@ const falsisdb = require("falsisdb")
 const db = new falsisdb("./database.json") //./[PATCH]
 ```
 Yukarıdaki kodda database dosyası olarak `database.json`'u tanımladım. İsterseniz farklı bir dosya tanımlayabilirsiniz. Unutmayın, dosya başına `./` konmalıdır!
-İşlem tammalanınca kullanmaya başlarsanız `Unexpected end of JSON input` hatasını alabilrisiniz. Bunun sebebi dosyaya `{}` (suslü parantez) koymamanız. Dosyaya girip içerisine `{}` yazın. Ve artık kullanmaya başlayabilirsiniz.
+İşlem tamamlanınca kullanmaya başlarsanız `Unexpected end of JSON input` hatasını alabilrisiniz. Bunun sebebi dosyaya `{}` (suslü parantez) koymamanız. Dosyaya girip içerisine `{}` yazın. Ve artık kullanmaya başlayabilirsiniz.
 
 ## Event Sistemi
 ### Ready
