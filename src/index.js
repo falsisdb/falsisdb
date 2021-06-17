@@ -262,4 +262,10 @@ math(key , islem , key2) {
         }
         }
     }
+     includes(key) {
+        if(!key) {
+            throw new TypeError("Lütfen database dosyasında aramak istediğiniz veri adını girin.") //falsis kzgın 😎
+        }
+        return fs.readFileSync(this.jsonFilePath).includes(key)
+    }
 }
