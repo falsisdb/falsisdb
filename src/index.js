@@ -256,7 +256,7 @@ math(key , islem , key2) {
             github: "https://github.com/falsisdev/falsisdb",
             commands: `${Object.entries("./src/index.js").length}`,
             file: this.jsonFilePath,
-            lastdata: `data: ${data} type: ${type}`
+            lastdata: `data: ${data ? `${data}` : "null"} type: ${type ? `${type}` : "null"}`
         }
     }
 }
