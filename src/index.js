@@ -257,8 +257,8 @@ math(key , islem , key2) {
             commands: `${Object.entries("./src/index.js").length}`,
             file: this.jsonFilePath,
             lastdata: {
-            data: data ? data : "null",
-            type: type ? type : "null"
+            data: data || "null",
+            type: type || "null"
         }
         }
     }
