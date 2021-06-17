@@ -1,5 +1,5 @@
 # Falsisdb
-Falsisdb, quick.db benzeri açık kaynak kullanışlı database modülü. Bir database modülünde gereken herşeyi içeriyor!
+Falsisdb, quick.db benzeri, açık kaynak kodlu ve kullanışlı database modülü. Bir database modülünde gereken herşeyi, hatta daha fazlasını içeriyor!
 
 ## Kurulum
 Modülü kurmak için öncelikle konsola aşağıdaki yazıyı yazmalısınız.
@@ -15,136 +15,36 @@ const db = new falsisdb("./database.json") //./[PATCH]
 Yukarıdaki kodda database dosyası olarak `database.json`'u tanımladım. İsterseniz farklı bir dosya tanımlayabilirsiniz. Unutmayın, dosya başına `./` konmalıdır!
 İşlem tammalanınca kullanmaya başlarsanız `Unexpected end of JSON input` hatasını alabilrisiniz. Bunun sebebi dosyaya `{}` (suslü parantez) koymamanız. Dosyaya girip içerisine `{}` yazın. Ve artık kullanmaya başlayabilirsiniz.
 
-## Client Sistemi
-`message` kısmına yazılan yazı database bağlanınca konsola yazar. Eğer sistem kullanılmazsa otomatik yazı yazılır.
+## Event Sistemi
+### Ready
+type kısmı eğer ready ise ve status kısmı aktif ise code kısmına yazılan kod database bağlanınca çalışır.
 ```js
-db.on("ready" , {
-message : "Database bağlandı"
+db.on({
+	type: "ready",
+	status:"aktif",
+	code:`console.log("Ready eventi çalışıyor")`
 })
 ```
+### dataSet
+type kısmı eğer dataSet ise ve status kısmı aktif ise code kısmına yazılan kod database'e veri eklenince çalışır.
+```js
+db.on({
+	type:"dataSet",
+	status:"aktif",
+	code:`console.log("Veri tabanına yeni veri eklendi")`
+})
+```
+### dataSet
+type kısmı eğer dataDelete ise ve status kısmı aktif ise code kısmına yazılan kod database'den veri kaldırılınca çalışır.
+```js
+db.on({
+	type:"dataDelete",
+	status:"aktif",
+	code:`console.log("Veri tabanından veri silindi")`
+})
+```
+## Belgeler
+Daha fazla komuta ve örneğe bakmak için [Belgeleri](https://db.falsisdb.ml) ziyaret edebilirsiniz.
+## FalsisDB
 
-## Örnekler
-
-- Veri kaydedip veri çekme
-```js
-db.set("veri_adı", "veri_değeri") //undefined
-db.get("veri_adı") //veri_değeri
-```
-
-- Değişkeni tamamen silme
-```js
-db.delete("veri_adı") //undefined
-```
-
-- Dosyayı kontrol etme
-```js
-db.has("veri_adı") //true
-db.has("deneme") //false
-```
-```js
-if(db.has("veri_adı") === true) {
-return("Değişken veri tabanı dosyasında bulunuyor.")
-}else if(db.has("veri_adı") === false) {
-return("Değişken veri tabanı dosyasında bulunmuyor.")
-}
-```
-
-- Değişkeni çekme
-```js
-db.fetch("veri_adı") //veri_değişkeni
-```
-
-- Toplama
-```js
-db.sum("sayi_değişkeni", 2) //sayi_değişkeni + 2
-```
-```js
-db.set("sayi_değişkeni", 1) //undefined
-let değer = db.sum("sayi_değişkeni", 2)
-değer //3
-```
-
-- Çıkarma
-```js
-db.sub("sayi_değişkeni", 2) //sayi_değişkeni - 2
-```
-```js
-db.set("sayi_değişkeni", 3) //undefined
-let değer = db.sub("sayi_değişkeni", 2)
-değer //1
-```
-
-- Çarpma
-```js
-db.multi("sayi_değişkeni", 2) //sayi_değişkeni * 2
-```
-```js
-db.set("sayi_değişkeni", 2) //undefined
-let değer = db.multi("sayi_değişkeni", 2)
-değer //4
-```
-
-- Bölme
-```js
-db.divide("sayi_değişkeni", 2) //sayi_değişkeni / 2
-```
-```js
-db.set("sayi_değişkeni", 10) //undefined
-let değer = db.divide("sayi_değişkeni", 2)
-değer //5
-```
-
-- Ekleme
-```js
-db.set("sayi_değişkeni", "hey-")
-db.conc("sayi_değişkeni", "merhaba") //hey-merhaba
-```
-
-- Array Push
-```js
-db.push("array", "array2")
-```
-```js
-db.set("array", [ "array1" ])
-db.push("array", "array2") //[ "array1", "array2"]
-```
-
-- Dosya temizleme
-```js
-db.clear()
-```
-Main dosyada tanımlanan dosya temizlendi. Örneğin `./database.json` dosyası tamamen temizlenip içine `{}` yazıldı.
-
-- Matematik İşlemleri
-```js
-db.math(2 + 2) //4
-db.math(2 * 2) //4
-db.math(2 / 2) //1
-db.math(2 - 2) //0
-```
-İşaretler: `+, -, *, /, :, x`
-
-- Karekök
-```js
-db.sqrt(81) //9
-```
-
-## Komutlar
-
-```js
-db.set("Deneme", "Deneme değeri"); // Değişken ayarlama
-db.get("Deneme"); // Değişken Gösterme - çıktı: Deneme Değeri
-db.delete("Deneme"); // Değişken Kaldırma
-db.has("Deneme"); // false || true - Değişken Var mı?
-db.fetch("Deneme"); // Değişken getirme
-db.sum("yaş", 31); // Değişken ekleme
-db.sub("yaş", 14); // Değişken çıkarma
-db.multi("deneme", 2) //deneme değişkeni 2 ile çarpılır.
-db.divide("deneme", 2) //deneme değişkeni 2'ye bölünür
-db.conc("deneme", 2) //deneme değişkenine 2 değerini koyar.
-db.math(2 + 2) //matematik işlemleri - İşaretler: +, -, x, :, /, *
-db.sqrt(81) //9 - Karekök alır
-db.set("array", [ "elma" ]); 
-db.push("array", "portakal"); //arraye değer pushlar 
-db.clear(); // Değişken temizleme (hepsini)
-```
+<img src="https://cdn.discordapp.com/attachments/831451584034111499/855075597658882058/unknown.png">
