@@ -268,4 +268,10 @@ math(key , islem , key2) {
         }
         return fs.readFileSync(this.jsonFilePath).includes(key)
     }
+        all() {
+        if(!this.jsonFilePath) {
+            throw new TypeError("Database Dosyası Ayarlanmamış, okunacak dosya bulunamadı!")
+        }
+         return fs.readFileSync(`${this.jsonFilePath}`, "utf8")
+        }
 }
