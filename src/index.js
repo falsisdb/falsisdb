@@ -106,7 +106,7 @@ module.exports = class database {
         if(!key) throw Error("Silinicek Veriyi Gir!")  
         delete this.data[key];
         this.kaydet();
-        data = value
+        data = key
         type = "delete"
           if(deleteEventCheck === true){
           eval(deleteEventCode)
