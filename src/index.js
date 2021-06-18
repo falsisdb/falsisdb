@@ -34,7 +34,7 @@ const writeFileWithDirs = ((data, path) => {
 
 module.exports = class database {
     constructor(filePath) {
-        this.jsonFilePath = filePath || "./database.json";
+        this.jsonFilePath = filePath || "./falsisdb/database.json";
         this.data = {};
 
         if (!fs.existsSync(this.jsonFilePath) || !fs.lstatSync(this.jsonFilePath).isFile()) {
