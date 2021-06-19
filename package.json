@@ -1,7 +1,7 @@
 {
   "name": "falsisdb",
-  "version": "2.1.0",
-  "description": "npmjs için basit kullanımlı database modülü",
+  "version": "2.2.1",
+  "description": "Falsisdb, quick.db benzeri, açık kaynak kodlu ve kullanışlı database modülü. Bir database modülünde gereken herşeyi, hatta daha fazlasını içeriyor!",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "keywords": [
@@ -17,7 +17,7 @@
     "mongodb"
   ],
   "author": "falsis",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/falsisdev/falsisdb.git"
@@ -27,7 +27,6 @@
   },
   "homepage": "https://github.com/falsisdev/falsisdb#readme",
   "dependencies": {
-    "discord.js": "^12.5.3",
     "fs": "^0.0.1-security"
   },
   "devDependencies": {},
@@ -35,3 +34,4 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
+
