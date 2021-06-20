@@ -10,44 +10,22 @@ Bunu yazdıktan sonra modülün indirilmesiniz bekleyin.
 Modül kurulunca `main (ana)` dosyanıza aşağıdaki kodu ekleyin. Kodu en başa eklerseniz dosyanız düzenli olur
 ```js
 const falsisdb = require("falsisdb")
-const db = new falsisdb("./database.json") //./[PATCH]
+const db = new falsisdb() //|| ./[PATCH]
 ```
-Yukarıdaki kodda database dosyası olarak `database.json`'u tanımladım. İsterseniz farklı bir dosya tanımlayabilirsiniz. Unutmayın, dosya başına `./` konmalıdır!
+Yukarıdaki kodda paket, otomatik olarak `falsisdb/database.json` dosyası oluşturacak. İsterseniz farklı bir dosya tanımlayabilirsiniz. Unutmayın, dosya başına `./` konmalıdır!
 İşlem tamamlanınca kullanmaya başlarsanız `Unexpected end of JSON input` hatasını alabilrisiniz. Bunun sebebi dosyaya `{}` (suslü parantez) koymamanız. Dosyaya girip içerisine `{}` yazın. Ve artık kullanmaya başlayabilirsiniz.
 
-## Event Sistemi
-### Ready
-type kısmı eğer ready ise ve status kısmı aktif ise code kısmına yazılan kod database bağlanınca çalışır.
-```js
-db.on({
-	type: "ready",
-	status:"aktif",
-	code:`console.log("Ready eventi çalışıyor")`
-})
-```
-### dataSet
-type kısmı eğer dataSet ise ve status kısmı aktif ise code kısmına yazılan kod database'e veri eklenince çalışır.
-```js
-db.on({
-	type:"dataSet",
-	status:"aktif",
-	code:`console.log("Veri tabanına yeni veri eklendi")`
-})
-```
-### dataSet
-type kısmı eğer dataDelete ise ve status kısmı aktif ise code kısmına yazılan kod database'den veri kaldırılınca çalışır.
-```js
-db.on({
-	type:"dataDelete",
-	status:"aktif",
-	code:`console.log("Veri tabanından veri silindi")`
-})
-```
 ## Belgeler
-Daha fazla komuta ve örneğe bakmak için [Belgeleri](https://db.falsisdb.ml) ziyaret edebilirsiniz.
+Daha fazla komuta ve örneğe bakmak için [Belgeleri](https://docs.falsisdb.ml) ziyaret edebilirsiniz.
+
 ## Api
 Komutların tek bir yerde toplandığı [api sitemiz](https://api.falsisdb.ml/)i ziyaret edebilirsiniz.
+
 ## FalsisDB
 Teşekkürler: [lunexdev](https://github.com/lunexdev), [berat141](https://github.com/berat141), [aloima](https://github.com/aloima)
 
-<img src="https://cdn.discordapp.com/attachments/831451584034111499/855075597658882058/unknown.png">
+<img src="https://img.shields.io/github/v/release/falsisdev/falsisdb?style=for-the-badge"> <img src="https://img.shields.io/github/stars/falsisdev/falsisdb?style=for-the-badge"> <img src="https://img.shields.io/github/forks/falsisdev/falsisdb?style=for-the-badge">
+
+<img src="https://github-readme-stats.vercel.app/api/pin/?username=falsisdev&repo=falsisdb&cache_seconds=86400&theme=react">
+
+<a href="https://www.kremlin-bot.ga/lisans"><img src="https://img.shields.io/github/license/falsisdev/falsisdb?style=for-the-badge"></a>
