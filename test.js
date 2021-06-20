@@ -1,5 +1,5 @@
 const falsis = require("./src/index.js")
-const db = new falsis('./database.json')
+const db = new falsis()
 db.on({
 	type: "ready",
 	status:"aktif",
@@ -18,4 +18,5 @@ db.on({
 db.set("veri_adı", "veri_değeri")
 db.delete("veri_adı")
 console.log(db.info)
+console.log(db.all())
 //Bunu yazan tosun (falsis eheheu) okuyanın aaa--
