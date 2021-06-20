@@ -242,7 +242,7 @@ math(key , islem , key2) {
         else {
         throw Error("Tanımsız İşlem!")}}
         random(key){
-            if(!key) throw Error("Max Kaç Olubileceğini Gir!")
+            if(!key) throw Error("Max Kaç oluşabileceğini Gir!")
             return Math.floor((Math.random() * key) + 1);
         }
     
@@ -275,3 +275,4 @@ math(key , islem , key2) {
          return fs.readFileSync(`${this.jsonFilePath}`, "utf8")
         }
 }
+
