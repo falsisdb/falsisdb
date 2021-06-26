@@ -420,7 +420,7 @@ math(key , islem , key2) {
         }
         includesKey(key) {
           if(!key) {
-            throw new Error("Veri anahtarı belirtilmemiş.")
+            throw Error("Veri anahtarı belirtilmemiş.")
           } else {
           return Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8")))
           .filter(x=>x[0].includes(key)).length === 0 ? false : true
@@ -428,7 +428,7 @@ math(key , islem , key2) {
         }
         includesValue(value) {
           if(!value) {
-            throw new Error("Veri değeri belirtilmemiş.")
+            throw Error("Veri değeri belirtilmemiş.")
           } else {
           return Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8")))
           .filter(x=>x[1].includes(value)).length === 0 ? false : true
