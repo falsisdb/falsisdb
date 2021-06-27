@@ -94,19 +94,12 @@ module.exports = class database {
     }
 
     set(key, value) {
-      return new Promise((resolve,reject) => {
         if(!key) {
           throw Error("Değiştirilicek Veriyi Gir!")
-          reject("Değiştirilicek Veriyi Gir!")
         }
         else if(!value) {
           throw Error("Değişicek Veriyi Gir!")
-          reject("Değişicek Veriyi Gir!")
         } else {
-          resolve({
-            key: key,
-            value: value
-          })
         this.data[key] = value;
         this.kaydet();
         data = value
@@ -115,20 +108,12 @@ module.exports = class database {
           eval(dataCode.replace("%key%", key).replace("%value%", value))
         }
         }
-      })
     }
 
     delete(key) {
-      const val = this.data[key]
-      return new Promise((resolve,reject) => {
         if(!key) {
           throw Error("Silinicek Veriyi Gir!")  
-          reject("Silinicek Veriyi Gir!")
         } else {
-          resolve({
-            key:key,
-            value:val
-          })
         delete this.data[key];
         this.kaydet();
         data = key
@@ -137,196 +122,107 @@ module.exports = class database {
           eval(deleteEventCode.replace("%key%", key).replace("%value%", val))
         }
         }
-      })
     }
 
     conc(key, count) {
-      const oldV = this.data[key]
-      return new Promise((resolve,reject) => {
         if(!key) {
           throw Error("Ekleme Yapılacak Veriyi Gir!")
-          reject("Ekleme Yapılacak Veriyi Gir!")
         }
         if(!count) {
           throw Error("Eklenecek Veriyi Gir!")
-          reject("Eklenecek Veriyi Gir!")
         }
         if (!this.data[key]) {
           this.data[key] = count;
-          resolve({
-            key:key,
-            count:count,
-            oldValue:oldV,
-            newValue:this.data[key]
-          })
         } else {
           this.data[key] += count.toString();
-          resolve({
-            key:key,
-            count:count,
-            oldValue:oldV,
-            newValue:this.data[key]
-          })
         }
 
         this.kaydet();
         data = count
         type = "conc"
-      })
     }
 
     multi(key, count) {
-      const oldVal = this.data[key]
-      return new Promise((resolve,reject) => {
         if(!key) {
           throw Error("Silinme Yapılacak Veriyi Gir!")
-          reject("Silinme Yapılacak Veriyi Gir!")
         }
         if(!count) {
           throw Error("Silinecek Veriyi Gir!")
-          reject("Silinecek Veriyi Gir!")
         }
         if(isNaN(this.data[key]) == true){
           throw Error("Lütfen bir sayı belirtin.")
-          reject("Lütfen bir sayı belirtin.")
-        }
+          }
         if (!this.data[key]) {
           this.data[key] = count;
-          resolve({
-            key:key,
-            count:count,
-            value:this.data[key]
-          })
         } else {
           this.data[key] *= count;
-          resolve({
-            key:key,
-            count:count,
-            oldValue:oldVal,
-            newValue:this.data[key]
-          })
         }
         this.kaydet();
         data = count
         type = "multi"
-      })
     }
 
     divide(key, count) {
-      const oldVal = this.data[key]
-      return new Promise((resolve,reject) => {
         if(!key) {
           throw Error("Bölünme Yapılacak Veriyi Gir!")
-          reject("Bölünme Yapılacak Veriyi Gir!")
         }
         if(!count) {
           throw Error("Bölünecek Veriyi Gir!")
-          reject("Bölünecek Veriyi Gir!")
         }
         if(isNaN(this.data[key]) == true){
             throw Error("Lütfen bir sayı belirtin.")
-            reject("Lütfen bir sayı belirtin.")
         }
         if (!this.data[key]) {
           this.data[key] = count;
-          resolve({
-            key:key,
-            count:count,
-            oldValue: oldVal,
-            newValue: this.data[key]
-          })
         } else {
           this.data[key] /= count;
-          resolve({
-            key:key,
-            count:count,
-            oldValue: oldVal,
-            newValue: this.data[key]
-          })
         }
 
         this.kaydet();
         data = count
         type = "divide"
-      })
     }
 
     sum(key, count) {
-      const old = this.data[key]
-      return new Promise((resolve,reject) => {
         if(!key) {
           throw Error("Ekleme Yapılacak Veriyi Gir!")
-          reject("Ekleme Yapılacak Veriyi Gir!")
         }
         if(!count) {
           throw Error("Eklenecek Veriyi Gir!")
-          reject("Eklenecek Veriyi Gir!")
         }
         if(isNaN(this.data[key]) == true){
             throw Error("Lütfen bir sayı belirtin.")
-            reject("Lütfen bir sayı belirtin.")
         }
         if (!this.data[key]) {
           this.data[key] = +count;
-          resolve({
-            key:key,
-            count:count,
-            oldValue:old,
-            newValue:this.data[key]
-          })
-        } else {
+          } else {
           this.data[key] += count;
-          resolve({
-            key:key,
-            count:count,
-            oldValue:old,
-            newValue:this.data[key]
-          })
         }
 
         this.kaydet();
         data = count
         type = "sum"
-      })
     }
 
     sub(key, count) {
-            const oldd = this.data[key]
-      return new Promise((resolve,reject) => {
         if(!key) {
           throw Error("Çıkarma Yapılacak Veriyi Gir!")
-          reject("Çıkarma Yapılacak Veriyi Gir!")
         }
         if(!count) {
           throw Error("Çıkarılacak Veriyi Gir!")
-          reject("Çıkarılacak Veriyi Gir!")
         }
         if(isNaN(this.data[key]) == true){
             throw Error("Lütfen bir sayı belirtin.")
-            reject("Lütfen bir sayı belirtin.")
         }
         if (!this.data[key]) {
           this.data[key] = -count;
-          resolve({
-            key:key,
-            count:count,
-            oldValue:oldd,
-            newValue:this.data[key]
-          })
         } else {
           this.data[key] -= count;
-          resolve({
-            key:key,
-            count:count,
-            oldValue:oldd,
-            newValue:this.data[key]
-          })
         }
 
         this.kaydet();
         data = count
         type = "sum"
-      })
     }
     push(key, element) {
         if(!key) {
@@ -390,7 +286,7 @@ math(key , islem , key2) {
             return Math.floor((Math.random() * key) + 1);
         }
     
-     get info(){
+   get info(){
         return{
             name: "falsisdb",
             type:"database",
@@ -420,7 +316,7 @@ math(key , islem , key2) {
         }
         includesKey(key) {
           if(!key) {
-            throw Error("Veri anahtarı belirtilmemiş.")
+            throw new Error("Veri anahtarı belirtilmemiş.")
           } else {
           return Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8")))
           .filter(x=>x[0].includes(key)).length === 0 ? false : true
@@ -428,10 +324,10 @@ math(key , islem , key2) {
         }
         includesValue(value) {
           if(!value) {
-            throw Error("Veri değeri belirtilmemiş.")
+            throw new Error("Veri değeri belirtilmemiş.")
           } else {
           return Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8")))
           .filter(x=>x[1].includes(value)).length === 0 ? false : true
           }
         }
-}
+}  
