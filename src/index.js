@@ -119,7 +119,7 @@ module.exports = class database {
         data = key
         type = "delete"
           if(deleteEventCheck === true){
-          eval(deleteEventCode.replace("%key%", key).replace("%value%", val))
+          eval(deleteEventCode.replace("%key%", key))
         }
         }
     }
