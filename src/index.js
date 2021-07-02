@@ -111,6 +111,7 @@ module.exports = class database {
     }
 
     delete(key) {
+        const val = this.data[key]
         if(!key) {
           throw Error("Silinicek Veriyi Gir!")  
         } else {
@@ -119,7 +120,7 @@ module.exports = class database {
         data = key
         type = "delete"
           if(deleteEventCheck === true){
-          eval(deleteEventCode.replace("%key%", key))
+          eval(deleteEventCode.replace("%key%", key).replace("%value%", val))
         }
         }
     }
