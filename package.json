@@ -1,6 +1,6 @@
 {
   "name": "falsisdb",
-  "version": "2.2.1",
+  "version": "2.2.7",
   "description": "Falsisdb, quick.db benzeri, açık kaynak kodlu ve kullanışlı database modülü. Bir database modülünde gereken herşeyi, hatta daha fazlasını içeriyor!",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
@@ -34,4 +34,3 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
-
