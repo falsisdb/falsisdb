@@ -88,9 +88,20 @@ module.exports = class database {
         return this.data[key];
     }
 
-    has(key) {
+    has(key, returnValue=false) {
         if(!key) throw Error("Şartlanacak Veriyi Gir!")
+        
+        if(returnValue === false){
         return Boolean(this.data[key]);
+        } else {
+          let result = Boolean(this.data[key]);
+          let values = Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8"))).filter(x=>x[0] === key).map(x=>x[1])
+          
+          return{
+            result:result,
+            values:values
+          }
+        }
     }
 
     set(key, value) {
@@ -330,5 +341,34 @@ math(key , islem , key2) {
           return Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8")))
           .filter(x=>x[1].includes(value)).length === 0 ? false : true
           }
+        }
+    
+    hasValue(value, returnKey=false){
+          if(!value){
+            throw new Error("Değer belirtilmemiş.")
+          }
+          
+          if(returnKey == false){
+          return Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8")))
+          .filter(x=>x[1] === value).length === 0 ? false : true
+          } else {
+            let result = Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8")))
+          .filter(x=>x[1] === value).length === 0 ? false : true
+           
+           let keys = Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8")))
+          .filter(x=>x[1] === value).map(x=>x[0])
+          
+            return{
+              result:result,
+              keys: keys
+            }
+          }
+        }    
+        keys(){
+          return Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8"))).map(x=>x[0])
+        }
+        
+       values(){
+          return Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8"))).map(x=>x[1])
         }
 }  
