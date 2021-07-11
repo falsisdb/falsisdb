@@ -10,8 +10,8 @@ assignees: ''
 # Hata Bildirisi
 
 ## Komut
-[] Fonksiyon: 
-[] Event:
+[ ] Fonksiyon: 
+[ ] Event:
 
 # Hata mesajı
 <!--buraya hata mesajı-->
