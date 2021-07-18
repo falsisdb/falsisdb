@@ -1,9 +1,7 @@
 const fs = require("fs");
 let clearfunc;
-let check;
-let dataCode;
-let deleteEventCheck;
-let deleteEventCode;
+let check = null
+let deleteEventCheck = null
 let data;
 let type;
 
@@ -31,9 +29,10 @@ const writeFileWithDirs = ((data, path) => {
         fs.writeFileSync(path, data, "utf-8");
     }
 });
-
-module.exports = class database {
+const EventEmitter = require("events")
+module.exports = class database extends EventEmitter{
     constructor(filePath) {
+      super();
         this.jsonFilePath = filePath || "./falsisdb/database.json";
         this.data = {};
 
@@ -42,8 +41,16 @@ module.exports = class database {
         } else {
             this.fetchDataFromFile();
         }
+       setInterval(() => {
+          if(check != null){
+        this.emit('dataSet', check)
+        check = null
+          } else if(deleteEventCheck != null) {
+            this.emit('dataDelete', deleteEventCheck)
+            deleteEventCheck = null
+          }
+        }, 5000)
     }
-
     fetchDataFromFile() {
         let savedData;
 
@@ -58,23 +65,6 @@ module.exports = class database {
         writeFileWithDirs(JSON.stringify(this.data, null, 2), this.jsonFilePath);
     }
     
-    
-    on(event = {
-      type: new String(),
-      status: new String(),
-      code: new String()
-    }) {
-      if(event.type === "ready" && event.status === "aktif"){
-        eval(event.code)
-      } else if(event.type === "dataSet" && event.status === "aktif"){
-        check = true;
-        dataCode = event.code;
-      } else if(event.type === "dataDelete" && event.status === "aktif"){
-       deleteEventCheck = true
-       deleteEventCode = event.code
-      }
-    } 
-
     get(key) {
         if(!key) {
           throw Error("Getirilicek Veriyi Gir!")
@@ -87,7 +77,6 @@ module.exports = class database {
         if(!key) throw Error("Getirilicek Veriyi Gir!")
         return this.data[key];
     }
-
     has(key, returnValue=false) {
         if(!key) throw Error("Şartlanacak Veriyi Gir!")
         
@@ -105,6 +94,7 @@ module.exports = class database {
     }
 
     set(key, value) {
+       const old = this.data[key]
         if(!key) {
           throw Error("Değiştirilicek Veriyi Gir!")
         }
@@ -115,14 +105,17 @@ module.exports = class database {
         this.kaydet();
         data = value
         type = "set"
-          if(check === true){
-          eval(dataCode.replace("%key%", key).replace("%value%", value))
+        check = {
+          key: key,
+          changed: old == this.data[key] ? false : true,
+          oldValue: old,
+          value: value
         }
         }
     }
 
     delete(key) {
-        const val = this.data[key]
+      const val = this.data[key]
         if(!key) {
           throw Error("Silinicek Veriyi Gir!")  
         } else {
@@ -130,8 +123,9 @@ module.exports = class database {
         this.kaydet();
         data = key
         type = "delete"
-          if(deleteEventCheck === true){
-          eval(deleteEventCode.replace("%key%", key).replace("%value%", val))
+        deleteEventCheck = {
+          key: key,
+          value:val
         }
         }
     }
@@ -302,7 +296,7 @@ math(key , islem , key2) {
         return{
             name: "falsisdb",
             type:"database",
-            version: "2.2.7",
+            version: "2.2.5",
             owner: "falsisdev",
             developers: ["falsisdev", "lunexdev", "berat141"],
             github: "https://github.com/falsisdev/falsisdb",
@@ -342,8 +336,8 @@ math(key , islem , key2) {
           .filter(x=>x[1].includes(value)).length === 0 ? false : true
           }
         }
-    
-    hasValue(value, returnKey=false){
+        
+        hasValue(value, returnKey=false){
           if(!value){
             throw new Error("Değer belirtilmemiş.")
           }
@@ -363,12 +357,13 @@ math(key , islem , key2) {
               keys: keys
             }
           }
-        }    
-        keys(){
+        }
+        
+       keys(){
           return Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8"))).map(x=>x[0])
         }
         
        values(){
           return Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8"))).map(x=>x[1])
         }
-}  
+    }
