@@ -296,7 +296,7 @@ math(key , islem , key2) {
         return{
             name: "falsisdb",
             type:"database",
-            version: "2.2.5",
+            version: "3.0.0",
             owner: "falsisdev",
             developers: ["falsisdev", "lunexdev", "berat141"],
             github: "https://github.com/falsisdev/falsisdb",
