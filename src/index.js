@@ -366,4 +366,53 @@ math(key , islem , key2) {
        values(){
           return Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8"))).map(x=>x[1])
         }
+    all(){
+         this.fetchDataFromFile()
+         return this.data
+        }
+        
+        find(fn, thisArg) {
+           this.fetchDataFromFile()
+let res = {};
+if(thisArg) fn = fn.bind(thisArg);
+for(const [key,val] of Object.entries(this.data)){
+if(fn(val,key,this.data)){
+res[key] = val
+break;
+} else continue
+}
+return res
+}
+filter(fn, thisArg) {
+  this.fetchDataFromFile()
+let res = {};
+if(thisArg) fn = fn.bind(thisArg);
+for(const [key,val] of Object.entries(this.data)){
+if(fn(val,key,this.data))
+res[key] = val
+}
+return res
+}
+
+filterKey(fn, thisArg) {
+let res = {};
+if(thisArg) fn = fn.bind(thisArg);
+for(const [key,val] of Object.entries(this.data)){
+if(fn(key,val,this.data))
+res[key] = val
+}
+return res
+}
+
+findKey(fn, thisArg) {
+let res = {};
+if(thisArg) fn = fn.bind(thisArg);
+for(const [key,val] of Object.entries(this.data)){
+if(fn(key,val,this.data)){
+res[key] = val
+break;
+} else continue
+}
+return res
+}
     }
