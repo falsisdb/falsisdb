@@ -295,8 +295,8 @@ math(key , islem , key2) {
    get info(){
         return{
             name: "falsisdb",
-            type:"database",
-            version: "3.0.0",
+            type: "JsonDatabase",
+            version: "2.2.8",
             owner: "falsisdev",
             developers: ["falsisdev", "lunexdev", "berat141"],
             github: "https://github.com/falsisdev/falsisdb",
