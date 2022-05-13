@@ -64,7 +64,7 @@ module.exports = class database extends EventEmitter{
     kaydet() {
         writeFileWithDirs(JSON.stringify(this.data, null, 2), this.jsonFilePath);
     }
-    
+
     get(key) {
         if(!key) {
           throw Error("Getirilicek Veriyi Gir!")
@@ -79,13 +79,13 @@ module.exports = class database extends EventEmitter{
     }
     has(key, returnValue=false) {
         if(!key) throw Error("Şartlanacak Veriyi Gir!")
-        
+
         if(returnValue === false){
         return Boolean(this.data[key]);
         } else {
           let result = Boolean(this.data[key]);
           let values = Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8"))).filter(x=>x[0] === key).map(x=>x[1])
-          
+
           return{
             result:result,
             values:values
@@ -117,7 +117,7 @@ module.exports = class database extends EventEmitter{
     delete(key) {
       const val = this.data[key]
         if(!key) {
-          throw Error("Silinicek Veriyi Gir!")  
+          throw Error("Silinicek Veriyi Gir!")
         } else {
         delete this.data[key];
         this.kaydet();
@@ -254,11 +254,11 @@ module.exports = class database extends EventEmitter{
     clear() {
         this.data = {};
         this.kaydet();
-                if(clearfunc){ 
+                if(clearfunc){
         eval(clearfunc)  //dataClear event created by falsis
         }
     }
-    
+
     sqrt(sayi) {
         if(isNaN(sayi) == true) {
             return("Lütfen karekökünü bulmak istediğiniz geçerli bir sayı giriniz")}
@@ -267,19 +267,19 @@ module.exports = class database extends EventEmitter{
         }else{
             return Math.sqrt(sayi)}
 };
-    
+
 math(key , islem , key2) {
         if(!key) throw new TypeError("Birinci Sayıyı Gir!")
         if(!key2) throw new TypeError("İkinci Sayıyı Gir!")
         if(!islem) throw new TypeError("İşlemi Gir!")
         let sayı = parseInt(key)
-        let sayı2 = parseInt(key2)       
+        let sayı2 = parseInt(key2)
         if(islem=="+") {
         return sayı + sayı2
-        }     
+        }
         if(islem=="-") {
         return sayı - sayı2
-    }       
+    }
         if(islem=="*" || islem=="x"){
         return sayı * sayı2
     }
@@ -291,12 +291,12 @@ math(key , islem , key2) {
             if(!key) throw Error("Max Kaç oluşabileceğini Gir!")
             return Math.floor((Math.random() * key) + 1);
         }
-    
+
    get info(){
         return{
             name: "falsisdb",
             type: "JsonDatabase",
-            version: "2.2.8",
+            version: "2.2.7",
             owner: "falsisdev",
             developers: ["falsisdev", "lunexdev", "berat141"],
             github: "https://github.com/falsisdev/falsisdb",
@@ -336,33 +336,33 @@ math(key , islem , key2) {
           .filter(x=>x[1].includes(value)).length === 0 ? false : true
           }
         }
-        
+
         hasValue(value, returnKey=false){
           if(!value){
             throw new Error("Değer belirtilmemiş.")
           }
-          
+
           if(returnKey == false){
           return Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8")))
           .filter(x=>x[1] === value).length === 0 ? false : true
           } else {
             let result = Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8")))
           .filter(x=>x[1] === value).length === 0 ? false : true
-           
+
            let keys = Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8")))
           .filter(x=>x[1] === value).map(x=>x[0])
-          
+
             return{
               result:result,
               keys: keys
             }
           }
         }
-        
+
        keys(){
           return Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8"))).map(x=>x[0])
         }
-        
+
        values(){
           return Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8"))).map(x=>x[1])
         }
@@ -370,7 +370,7 @@ math(key , islem , key2) {
          this.fetchDataFromFile()
          return this.data
         }
-        
+
         find(fn, thisArg) {
            this.fetchDataFromFile()
 let res = {};
