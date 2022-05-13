@@ -4,7 +4,7 @@ Falsisdb, quick.db benzeri, açık kaynak kodlu ve kullanışlı database modül
 
 ## Kurulum
 
-Modülü kurmak için öncelikle konsola aşağıdaki yazıyı yazmalısınız.
+Modülü kurmak için öncelikle konsola aşağıdaki komutu yazmalısınız.
 
 ```bash
 npm i falsisdb@latest
@@ -21,11 +21,11 @@ Yukarıdaki kodda paket, otomatik olarak `falsisdb/database.json` dosyası oluş
 
 ## Belgeler
 
-Daha fazla komuta ve örneğe bakmak için [Belgeleri](https://docs.falsisdb.ml) ziyaret edebilirsiniz.
+Daha fazla komuta ve örneğe bakmak için [Belgeleri](https://falsisdev.gitbook.io/falsisdb/) ziyaret edebilirsiniz.
 
 ## Api
 
-Komutların tek bir yerde toplandığı [api sitemiz](https://api.falsisdb.ml/)i ziyaret edebilirsiniz.
+Komutların tek bir yerde toplandığı [api sitemiz](https://falsisdb.falsisdev.repl.co)i ziyaret edebilirsiniz.
 
 ## FalsisDB
 
