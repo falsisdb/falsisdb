@@ -27,7 +27,6 @@
   },
   "homepage": "https://github.com/falsisdev/falsisdb#readme",
   "dependencies": {
-    "fs": "^0.0.1-security",
     "events": "^3.3.0"
   },
   "devDependencies": {},
