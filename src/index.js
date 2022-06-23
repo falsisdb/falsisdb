@@ -4,6 +4,24 @@ let check = null
 let deleteEventCheck = null
 let data;
 let type;
+let backup;
+let btype;
+let btime;
+let backupkeys = []
+let backupvalues = []
+let backupcount = 0
+
+function padTo2Digits(num) {
+  return num.toString().padStart(2, '0');
+}
+
+function formatDate(date) {
+  return [
+    padTo2Digits(date.getDate()),
+    padTo2Digits(date.getMonth() + 1),
+    date.getFullYear(),
+  ].join('/');
+}
 
 const writeFileWithDirs = ((data, path) => {
     const dirs = path.split("/").slice(1, -1);
@@ -30,17 +48,103 @@ const writeFileWithDirs = ((data, path) => {
     }
 });
 const EventEmitter = require("events")
-module.exports = class database extends EventEmitter{
-    constructor(filePath) {
-      super();
-        this.jsonFilePath = filePath || "./falsisdb/database.json";
-        this.data = {};
-
-        if (!fs.existsSync(this.jsonFilePath) || !fs.lstatSync(this.jsonFilePath).isFile()) {
-            writeFileWithDirs("{}", this.jsonFilePath);
-        } else {
-            this.fetchDataFromFile();
+class database extends EventEmitter{
+  constructor(construct) {
+    super();
+    if(!construct.backup) {
+      if(!construct.backupPath) {
+        if(!construct.backupType) {
+          backup = false
+        }else {
+          let a = construct.backupType == "txt" ? "txt" : construct.backupType == "json" ? "json" : "error"
+          if(a == "error") throw new Error("Geçersiz Yedekleme Tipi Girildi. json veya txt yazınız.")
+          
+          btype = a
+          backup = "./falsisdb/backup." + btype
+          btime = construct.backupTime || 5
+          if(backup.slice("-3") == "txt") {
+            if(btype !== "txt") throw new Error("Girilen dosya uzatısı ile yedekleme türü eşleşmiyor.")
+          }else if(backup.slice("-3") == "son") {
+            if(btype !== "json") throw new Error("Girilen dosya uzantısı ile yedekleme türü eşleşmiyor.")
+          }
+          if(!fs.existsSync(backup) || !fs.lstatSync(backup).isFile()) {
+            if(btype == "json") writeFileWithDirs("[{}]", backup)
+            if(btype == "txt") writeFileWithDirs(`Backup Oluşturuldu | ${formatDate(new Date())} | {}`, backup)
+          }else {}
         }
+      }else {
+        if(!construct.backupType) {
+          backup = construct.backupPath
+          btype = construct.backupPath.slice("-3") == "son" ? "json" : construct.backupPath.slice("-3") == "txt" ? "txt" : undefined
+          btime = construct.backupTime || 5
+          if(backup.slice("-3") == "txt") {
+            if(btype !== "txt") throw new Error("Girilen dosya uzatısı ile yedekleme türü eşleşmiyor.")
+          }else if(backup.slice("-3") == "son") {
+            if(btype !== "json") throw new Error("Girilen dosya uzantısı ile yedekleme türü eşleşmiyor.")
+          }
+          if(!fs.existsSync(backup) || !fs.lstatSync(backup).isFile()) {
+            if(btype == "json") writeFileWithDirs("[{}]", backup)
+            if(btype == "txt") writeFileWithDirs(`Backup Oluşturuldu | ${formatDate(new Date())} | {}`, backup)
+          }else {}
+        }else{
+        let a = construct.backupType == "txt" ? "txt" : construct.backupType == "json" ? "json" : "error"
+        if(a == "error") throw new Error("Geçersiz Yedekleme Tipi Girildi. json veya txt yazınız.")
+        backup = construct.backupPath
+        btype = a
+        btime = construct.backupTime || 5
+        if(backup.slice("-3") == "txt") {
+          if(btype !== "txt") throw new Error("Girilen dosya uzatısı ile yedekleme türü eşleşmiyor.")
+        }else if(backup.slice("-3") == "son") {
+          if(btype !== "json") throw new Error("Girilen dosya uzantısı ile yedekleme türü eşleşmiyor.")
+        }
+        if(!fs.existsSync(backup) || !fs.lstatSync(backup).isFile()) {
+          if(btype == "json") writeFileWithDirs("[{}]", backup)
+          if(btype == "txt") writeFileWithDirs(`Backup Oluşturuldu | ${formatDate(new Date())} | {}`, backup)
+        }else {}
+        }
+      }
+    }else {
+      if(!construct.backup.path) {
+        if(!construct.backup.type) {
+          backup = false
+        }else{
+          let a = construct.backup.type == "txt" ? "txt" : construct.backup.type == "json" ? "json" : "error"
+          if(a == "error") throw new Error("Geçersiz Yedekleme Tipi Girildi. json veya txt yazınız.")
+          
+        btype = a
+        backup = "./falsisdb/backup." + btype
+        btime = construct.backup.time || 5
+        if(backup.slice("-3") == "txt") {
+          if(btype !== "txt") throw new Error("Girilen dosya uzatısı ile yedekleme türü eşleşmiyor.")
+        }else if(backup.slice("-3") == "son") {
+          if(btype !== "json") throw new Error("Girilen dosya uzantısı ile yedekleme türü eşleşmiyor.")
+        }
+        if(!fs.existsSync(backup) || !fs.lstatSync(backup).isFile()) {
+          if(btype == "json") writeFileWithDirs("[{}]", backup)
+          if(btype == "txt") writeFileWithDirs(`Backup Oluşturuldu | ${formatDate(new Date())} | {}`, backup)
+        }else {}
+      }
+    }
+    backup = construct.backup.path || "./falsisdb/backup." + btype
+    btype = construct.backup.type || backup.slice("-3") == "son" ? "json" : backup.slice("-3") == "txt" ? "txt" : undefined
+    btime = construct.backup.time || 5
+    if(backup.slice("-3") == "txt") {
+      if(btype !== "txt") throw new Error("Girilen dosya uzatısı ile yedekleme türü eşleşmiyor.")
+    }else if(backup.slice("-3") == "son") {
+      if(btype !== "json") throw new Error("Girilen dosya uzantısı ile yedekleme türü eşleşmiyor.")
+    }
+    if(!fs.existsSync(backup) || !fs.lstatSync(backup).isFile()) {
+      if(btype == "json") writeFileWithDirs("[{}]", backup)
+      if(btype == "txt") writeFileWithDirs(`Backup Oluşturuldu | ${formatDate(new Date())} | {}`, backup)
+    }else {}
+      this.bdata = {};
+      this.jsonFilePath = construct.filePath || "./falsisdb/database.json";
+      this.data = {};
+      if (!fs.existsSync(this.jsonFilePath) || !fs.lstatSync(this.jsonFilePath).isFile()) {
+          writeFileWithDirs("{}", this.jsonFilePath);
+      } else {
+          this.fetchDataFromFile();
+      }
        setInterval(() => {
           if(check != null){
         this.emit('dataSet', check)
@@ -51,6 +155,7 @@ module.exports = class database extends EventEmitter{
           }
         }, 5000)
     }
+  }
     fetchDataFromFile() {
         let savedData;
 
@@ -64,7 +169,9 @@ module.exports = class database extends EventEmitter{
     kaydet() {
         writeFileWithDirs(JSON.stringify(this.data, null, 2), this.jsonFilePath);
     }
-
+    yedekle() {
+      writeFileWithDirs(JSON.stringify(this.bdata, null, 2), backup);
+  }
     get(key) {
         if(!key) {
           throw Error("Getirilicek Veriyi Gir!")
@@ -110,6 +217,25 @@ module.exports = class database extends EventEmitter{
           changed: old == this.data[key] ? false : true,
           oldValue: old,
           value: value
+        }
+        if(backup == false){}else{
+          backupcount += 1
+          backupkeys.push(key)
+          backupvalues.push(value)
+          if(backupcount == btime){
+            backupcount = 0
+            if(btype == "json") {
+              this.bdata[`Back-Up-${Math.floor(Math.random() * 1000000000000)}`] = {
+                date: formatDate(new Date()),
+                keys: backupkeys,
+                values: backupvalues
+              }
+              this.yedekle();
+            }else if(btype == "txt") {
+              fs.writeFileSync(backup, `Back-Up-${Math.floor(Math.random() * 1000000000000)} | ${formatDate(new Date())} | ${backupkeys} | ${backupvalues}`)
+            }
+            console.log("Backup Alındı")
+          }
         }
         }
     }
@@ -416,3 +542,4 @@ break;
 return res
 }
     }
+module.exports =  database

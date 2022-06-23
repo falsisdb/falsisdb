@@ -1,13 +1,13 @@
 const falsis = require("./src/index.js")
-const db = new falsis()
-db.on({
-	"status": "aktif",
-	"type": "ready",
-	"code": `console.log("FalsisDB: Database başlatıldı")`
+const db = new falsis({
+filePath: "./falsisdb/database.json",
+backup: {
+	path: "./falsisdb/backup.txt",
+	time: 5
+}
 })
-db.on({
-	"type": "dataSet",
-	"status": "aktif",
-	"code": `console.log("FalsisDB: Database'e değeri %value% olan %key% isimli veri kaydedildi.")`
-})
-db.set("Variable name", "Variable value")
+db.set("a", "b")
+db.set("c", "d")
+db.set("e", "f")
+db.set("g", "h")
+db.set("j", "k")
