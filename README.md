@@ -34,7 +34,7 @@ const db = new falsisdb({
 `backupPath` veya `backup.path`: Yedekleme Alınacak Dosyayı Tanımlar.<br>
 `backupType` veya `backup.type`: Yedekleme Alınacak Dosyanın Türünü Tanımlar.<br>
 `backupTime` veya `backup.time`: Yedeklemenin Kaç Veride Bir Yapılacağını Tanımlar.<br>
-`eventInterval`: Eventlerin kaç veride bir gerçekleşeceğini tanımlar<br><br>
+`eventInterval`: Eventlerin ne kadar sürede bir kontrol edileceğini tanımlar<br><br>
 Yukarıdaki Paragraftaki tüm ögeler ve nesneler isteğe bağlıdır. Eğer Yazılmazsa Aşağıdakiler Uygulanır.<br>
 Veri Tabanı Dosyası: Varsayılanı `./falsisdb/database.json`<br>
 Yedekleme: Eğer hiçbir şey tanımlanmazsa yedekleme alınmaz. Ancak Aşağıdakilerden Herhangi Biri Bile Tanımlanırsa Varsayılanlar Aşağıdaki Gibi Olur. <br>
