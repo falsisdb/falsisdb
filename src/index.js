@@ -57,15 +57,15 @@ class database extends EventEmitter{
           backup = false
         }else {
           let a = construct.backupType == "txt" ? "txt" : construct.backupType == "json" ? "json" : "error"
-          if(a == "error") throw new Error("Geçersiz Yedekleme Tipi Girildi. json veya txt yazınız.")
+          if(a == "error") throw new Error("❌ FalsisDB Hatası: Geçersiz Yedekleme Tipi Girildi. Lütfen Yedekleme Tipini json veya txt Olarak Değiştirin.")
           
           btype = a
           backup = "./falsisdb/backup." + btype
           btime = construct.backupTime || 5
           if(backup.slice("-3") == "txt") {
-            if(btype !== "txt") throw new Error("Girilen dosya uzatısı ile yedekleme türü eşleşmiyor.")
+            if(btype !== "txt") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
           }else if(backup.slice("-3") == "son") {
-            if(btype !== "json") throw new Error("Girilen dosya uzantısı ile yedekleme türü eşleşmiyor.")
+            if(btype !== "json") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
           }
           if(!fs.existsSync(backup) || !fs.lstatSync(backup).isFile()) {
             if(btype == "json") writeFileWithDirs("[{}]", backup)
@@ -78,9 +78,9 @@ class database extends EventEmitter{
           btype = construct.backupPath.slice("-3") == "son" ? "json" : construct.backupPath.slice("-3") == "txt" ? "txt" : undefined
           btime = construct.backupTime || 5
           if(backup.slice("-3") == "txt") {
-            if(btype !== "txt") throw new Error("Girilen dosya uzatısı ile yedekleme türü eşleşmiyor.")
+            if(btype !== "txt") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
           }else if(backup.slice("-3") == "son") {
-            if(btype !== "json") throw new Error("Girilen dosya uzantısı ile yedekleme türü eşleşmiyor.")
+            if(btype !== "json") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
           }
           if(!fs.existsSync(backup) || !fs.lstatSync(backup).isFile()) {
             if(btype == "json") writeFileWithDirs("[{}]", backup)
@@ -88,14 +88,14 @@ class database extends EventEmitter{
           }else {}
         }else{
         let a = construct.backupType == "txt" ? "txt" : construct.backupType == "json" ? "json" : "error"
-        if(a == "error") throw new Error("Geçersiz Yedekleme Tipi Girildi. json veya txt yazınız.")
+        if(a == "error") throw new Error("❌ FalsisDB Hatası: Geçersiz Yedekleme Tipi Girildi. Lütfen Yedekleme Tipini json veya txt Olarak Değiştirin.")
         backup = construct.backupPath
         btype = a
         btime = construct.backupTime || 5
         if(backup.slice("-3") == "txt") {
-          if(btype !== "txt") throw new Error("Girilen dosya uzatısı ile yedekleme türü eşleşmiyor.")
+          if(btype !== "txt") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
         }else if(backup.slice("-3") == "son") {
-          if(btype !== "json") throw new Error("Girilen dosya uzantısı ile yedekleme türü eşleşmiyor.")
+          if(btype !== "json") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
         }
         if(!fs.existsSync(backup) || !fs.lstatSync(backup).isFile()) {
           if(btype == "json") writeFileWithDirs("[{}]", backup)
@@ -109,15 +109,15 @@ class database extends EventEmitter{
           backup = false
         }else{
           let a = construct.backup.type == "txt" ? "txt" : construct.backup.type == "json" ? "json" : "error"
-          if(a == "error") throw new Error("Geçersiz Yedekleme Tipi Girildi. json veya txt yazınız.")
+          if(a == "error") throw new Error("❌ FalsisDB Hatası: Geçersiz Yedekleme Tipi Girildi. Lütfen Yedekleme Tipini json veya txt Olarak Değiştirin.")
           
         btype = a
         backup = "./falsisdb/backup." + btype
         btime = construct.backup.time || 5
         if(backup.slice("-3") == "txt") {
-          if(btype !== "txt") throw new Error("Girilen dosya uzatısı ile yedekleme türü eşleşmiyor.")
+          if(btype !== "txt") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
         }else if(backup.slice("-3") == "son") {
-          if(btype !== "json") throw new Error("Girilen dosya uzantısı ile yedekleme türü eşleşmiyor.")
+          if(btype !== "json") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
         }
         if(!fs.existsSync(backup) || !fs.lstatSync(backup).isFile()) {
           if(btype == "json") writeFileWithDirs("[{}]", backup)
@@ -129,9 +129,9 @@ class database extends EventEmitter{
     btype = construct.backup.type || backup.slice("-3") == "son" ? "json" : backup.slice("-3") == "txt" ? "txt" : undefined
     btime = construct.backup.time || 5
     if(backup.slice("-3") == "txt") {
-      if(btype !== "txt") throw new Error("Girilen dosya uzatısı ile yedekleme türü eşleşmiyor.")
+      if(btype !== "txt") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
     }else if(backup.slice("-3") == "son") {
-      if(btype !== "json") throw new Error("Girilen dosya uzantısı ile yedekleme türü eşleşmiyor.")
+      if(btype !== "json") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
     }
     if(!fs.existsSync(backup) || !fs.lstatSync(backup).isFile()) {
       if(btype == "json") writeFileWithDirs("[{}]", backup)
@@ -174,18 +174,18 @@ class database extends EventEmitter{
   }
     get(key) {
         if(!key) {
-          throw Error("Getirilicek Veriyi Gir!")
+          throw Error("❌ FalsisDB Hatası: Veri Tabanından Çekilecek Veri Bulunamadı. Lütfen Çekmek İstediğiniz Veriyi Girin.")
         } else {
         return this.data[key];
      }
     }
 
     fetch(key) {
-        if(!key) throw Error("Getirilicek Veriyi Gir!")
+        if(!key) throw Error("❌ FalsisDB Hatası: Veri Tabanından Çekilecek Veri Bulunamadı. Lütfen Çekmek İstediğiniz Veriyi Girin.")
         return this.data[key];
     }
     has(key, returnValue=false) {
-        if(!key) throw Error("Şartlanacak Veriyi Gir!")
+        if(!key) throw Error("❌ FalsisDB Hatası: Veri Tabanında Varlığı Kontrol Edilecek Veri Bulunamadı. Lütfen Şartlanacak Veriyi Girin.")
 
         if(returnValue === false){
         return Boolean(this.data[key]);
@@ -203,10 +203,10 @@ class database extends EventEmitter{
     set(key, value) {
        const old = this.data[key]
         if(!key) {
-          throw Error("Değiştirilicek Veriyi Gir!")
+          throw Error("❌ FalsisDB Hatası: Veri Tabanı Dosyasına Eklenecek Veri Bulunamadı. Lütfen Eklemek İstediğiniz Verinin İsmini Girin.")
         }
         else if(!value) {
-          throw Error("Değişicek Veriyi Gir!")
+          throw Error("❌ FalsisDB Hatası: Veri Tabanı Dosyasına Eklenecek Veri Bulunamadı. Lütfen Eklemek İstediğiniz Verinin Değerini Girin.")
         } else {
         this.data[key] = value;
         this.kaydet();
@@ -234,7 +234,7 @@ class database extends EventEmitter{
             }else if(btype == "txt") {
               fs.writeFileSync(backup, `Back-Up-${Math.floor(Math.random() * 1000000000000)} | ${formatDate(new Date())} | ${backupkeys} | ${backupvalues}`)
             }
-            console.log("Backup Alındı")
+            console.log("📝 Falsisdb Bilgilendirme: Yedekleme Alındı. Yedek ismi: Back-Up-" + Math.floor(Math.random() * 1000000000000) + ".")
           }
         }
         }
@@ -243,7 +243,7 @@ class database extends EventEmitter{
     delete(key) {
       const val = this.data[key]
         if(!key) {
-          throw Error("Silinicek Veriyi Gir!")
+          throw Error("❌ FalsisDB Hatası: Veri Tabanı Dosyasınan Silinmek İstenen Veri Bulunamadı. Lütfen Silinecek Veriyi Girin.")
         } else {
         delete this.data[key];
         this.kaydet();
@@ -258,10 +258,10 @@ class database extends EventEmitter{
 
     conc(key, count) {
         if(!key) {
-          throw Error("Ekleme Yapılacak Veriyi Gir!")
+          throw Error("❌ FalsisDB Hatası: Veri Tabanında Üzerine Ekleme Yapılmak İstenen Veri Bulunamadı. Lütfen Ekleme Yapmak İstediğiniz Verinin İsmini Girin.")
         }
         if(!count) {
-          throw Error("Eklenecek Veriyi Gir!")
+          throw Error("❌ FalsisDB Hatası: Verinin Üzerine Eklemek İstediğiniz Değer Bulunamadı. Lütfen Ekleme Yapmak İstediğiniz Verinin İsmini Girin.")
         }
         if (!this.data[key]) {
           this.data[key] = count;
@@ -276,13 +276,13 @@ class database extends EventEmitter{
 
     multi(key, count) {
         if(!key) {
-          throw Error("Silinme Yapılacak Veriyi Gir!")
+          throw Error("❌ FalsisDB Hatası: Veri Tabanında Çarpma İşlemine Sokulacak Veri Bulunamadı. Lütfen Verinin İsmini Girin.")
         }
         if(!count) {
-          throw Error("Silinecek Veriyi Gir!")
+          throw Error("❌ FalsisDB Hatası: Veri ile Çarpma İşlemine Sokmak İstediğiniz Değer Bulunamadı. Lütfen İşleme Sokmak İstediğiniz Verinin İsmini Girin.")
         }
         if(isNaN(this.data[key]) == true){
-          throw Error("Lütfen bir sayı belirtin.")
+          throw Error("❌ FalsisDB Hatası: Veri ile Çarpma İşlemine Sokmak İstediğiniz Değer Bir Sayı Olmalı. Lütfen İşleme Sokmak İstediğiniz Veriyi Sayı Formatında Girin.")
           }
         if (!this.data[key]) {
           this.data[key] = count;
@@ -296,13 +296,13 @@ class database extends EventEmitter{
 
     divide(key, count) {
         if(!key) {
-          throw Error("Bölünme Yapılacak Veriyi Gir!")
+          throw Error("❌ FalsisDB Hatası: Veri Tabanında Bölme İşlemine Sokulacak Veri Bulunamadı. Lütfen Verinin İsmini Girin.")
         }
         if(!count) {
-          throw Error("Bölünecek Veriyi Gir!")
+          throw Error("❌ FalsisDB Hatası: Veri ile Bölme İşlemine Sokmak İstediğiniz Değer Bulunamadı. Lütfen İşleme Sokmak İstediğiniz Verinin İsmini Girin.")
         }
         if(isNaN(this.data[key]) == true){
-            throw Error("Lütfen bir sayı belirtin.")
+            throw Error("❌ FalsisDB Hatası: Veri ile Bölme İşlemine Sokmak İstediğiniz Değer Bir Sayı Olmalı. Lütfen İşleme Sokmak İstediğiniz Veriyi Sayı Formatında Girin.")
         }
         if (!this.data[key]) {
           this.data[key] = count;
@@ -317,13 +317,13 @@ class database extends EventEmitter{
 
     sum(key, count) {
         if(!key) {
-          throw Error("Ekleme Yapılacak Veriyi Gir!")
+          throw Error("❌ FalsisDB Hatası: Veri Tabanında Toplama İşlemine Sokulacak Veri Bulunamadı. Lütfen Verinin İsmini Girin.")
         }
         if(!count) {
-          throw Error("Eklenecek Veriyi Gir!")
+          throw Error("❌ FalsisDB Hatası: Veri ile Toplama İşlemine Sokmak İstediğiniz Değer Bulunamadı. Lütfen İşleme Sokmak İstediğiniz Verinin İsmini Girin.")
         }
         if(isNaN(this.data[key]) == true){
-            throw Error("Lütfen bir sayı belirtin.")
+            throw Error("❌ FalsisDB Hatası: Veri ile Toplama İşlemine Sokmak İstediğiniz Değer Bir Sayı Olmalı. Lütfen İşleme Sokmak İstediğiniz Veriyi Sayı Formatında Girin.")
         }
         if (!this.data[key]) {
           this.data[key] = +count;
@@ -338,13 +338,13 @@ class database extends EventEmitter{
 
     sub(key, count) {
         if(!key) {
-          throw Error("Çıkarma Yapılacak Veriyi Gir!")
+          throw Error("❌ FalsisDB Hatası: Veri Tabanında Çıkarma İşlemine Sokulacak Veri Bulunamadı. Lütfen Verinin İsmini Girin.")
         }
         if(!count) {
-          throw Error("Çıkarılacak Veriyi Gir!")
+          throw Error("❌ FalsisDB Hatası: Veri ile Çıkarma İşlemine Sokmak İstediğiniz Değer Bulunamadı. Lütfen İşleme Sokmak İstediğiniz Verinin İsmini Girin.")
         }
         if(isNaN(this.data[key]) == true){
-            throw Error("Lütfen bir sayı belirtin.")
+            throw Error("❌ FalsisDB Hatası: Veri ile Çıkarma İşlemine Sokmak İstediğiniz Değer Bir Sayı Olmalı. Lütfen İşleme Sokmak İstediğiniz Veriyi Sayı Formatında Girin.")
         }
         if (!this.data[key]) {
           this.data[key] = -count;
@@ -358,16 +358,16 @@ class database extends EventEmitter{
     }
     push(key, element) {
         if(!key) {
-          throw Error("Array Adını Gir!")
+          throw Error("❌ FalsisDB Hatası: Veri Tabanında Üzerine Değer Eklemek İstediğiniz Array Bir Veri Bulunamadı. Lütfen Verinin İsmini Girin.")
         }
         if(!element) {
-          throw Error("Array Verisini Gir!")
+          throw Error("❌ FalsisDB Hatası: Verinin Üzerine Eklemek İstediğiniz Değer Bulunamadı. Lütfen Eklemek İstediğiniz Değerin İsmini Girin.")
         }
         if (!this.data[key]) {
           this.data[key] = [];
         }
         if(!Array.isArray(this.data[key])){
-          throw Error("Girilen verinin değeri bir array değil.")
+          throw Error("❌ FalsisDB Hatası: Veri Tabanında Üzerine Değer Eklemek İstediğiniz Veri Array Değil. Lütfen Veriyi Array Formatında Olacak Biçimde Değiştirin.")
         } else {
         this.data[key].push(element)
         this.kaydet();
@@ -384,50 +384,19 @@ class database extends EventEmitter{
         eval(clearfunc)  //dataClear event created by falsis
         }
     }
-
-    sqrt(sayi) {
-        if(isNaN(sayi) == true) {
-            return("Lütfen karekökünü bulmak istediğiniz geçerli bir sayı giriniz")}
-        if(!sayi) {
-            throw new TypeError("Lütfen karekökünü bulmak istediğiniz sayıyı giriniz.")
-        }else{
-            return Math.sqrt(sayi)}
-};
-
-math(key , islem , key2) {
-        if(!key) throw new TypeError("Birinci Sayıyı Gir!")
-        if(!key2) throw new TypeError("İkinci Sayıyı Gir!")
-        if(!islem) throw new TypeError("İşlemi Gir!")
-        let sayı = parseInt(key)
-        let sayı2 = parseInt(key2)
-        if(islem=="+") {
-        return sayı + sayı2
-        }
-        if(islem=="-") {
-        return sayı - sayı2
-    }
-        if(islem=="*" || islem=="x"){
-        return sayı * sayı2
-    }
-        if(islem=="/" || islem==":") {
-        return sayı / sayı2}
-        else {
-        throw Error("Tanımsız İşlem!")}}
-        random(key){
-            if(!key) throw Error("Max Kaç oluşabileceğini Gir!")
-            return Math.floor((Math.random() * key) + 1);
-        }
-
    get info(){
         return{
             name: "falsisdb",
             type: "JsonDatabase",
-            version: "2.2.7",
+            version: "2.2.8",
             owner: "falsisdev",
             developers: ["falsisdev", "lunexdev", "berat141"],
             github: "https://github.com/falsisdev/falsisdb",
             commands: `${Object.entries("./src/index.js").length}`,
-            file: this.jsonFilePath,
+            pathfile: this.jsonFilePath,
+            backupfile: backup,
+            backuptype: btype,
+            backuptime: btime,
             lastdata: {
             data: data || null,
             type: type || null
@@ -436,19 +405,19 @@ math(key , islem , key2) {
     }
      includes(key) {
         if(!key) {
-            throw new TypeError("Lütfen database dosyasında aramak istediğiniz veri adını girin.") //falsis kzgın 😎
+            throw new TypeError("❌ FalsisDB Hatası: Veri Tabanında Varlığı Kontrol Edilecek Veri Bulunamadı. Lütfen Şartlanacak Veriyi Girin.") 
         }
         return fs.readFileSync(this.jsonFilePath).includes(key)
     }
         all() {
         if(!this.jsonFilePath) {
-            throw new TypeError("Database Dosyası Ayarlanmamış, okunacak dosya bulunamadı!")
+            throw new TypeError("❌ FalsisDB Hatası: Veri Tabanı Dosyası Bulunamadı. Lütfen Geliştiriciler İle İletişime Geçin.")
         }
          return fs.readFileSync(`${this.jsonFilePath}`, "utf8")
         }
         includesKey(key) {
           if(!key) {
-            throw new Error("Veri anahtarı belirtilmemiş.")
+            throw new Error("❌ FalsisDB Hatası: Veri Tabanında Varlığı Kontrol Edilecek Veri Bulunamadı. Lütfen Şartlanacak Veriyi Girin.")
           } else {
           return Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8")))
           .filter(x=>x[0].includes(key)).length === 0 ? false : true
@@ -456,7 +425,7 @@ math(key , islem , key2) {
         }
         includesValue(value) {
           if(!value) {
-            throw new Error("Veri değeri belirtilmemiş.")
+            throw new Error("❌ FalsisDB Hatası: Veri Tabanında Varlığı Kontrol Edilecek Veri Değeri Bulunamadı. Lütfen Şartlanacak Verinin Değerini Girin.")
           } else {
           return Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8")))
           .filter(x=>x[1].includes(value)).length === 0 ? false : true
@@ -465,7 +434,7 @@ math(key , islem , key2) {
 
         hasValue(value, returnKey=false){
           if(!value){
-            throw new Error("Değer belirtilmemiş.")
+            throw new Error("❌ FalsisDB Hatası: Veri Tabanında Varlığı Kontrol Edilecek Veri Değeri Bulunamadı. Lütfen Şartlanacak Verinin Değerini Girin.")
           }
 
           if(returnKey == false){
