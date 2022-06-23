@@ -1,7 +1,9 @@
 const fs = require("fs");
 let clearfunc;
 let check = null
+let willBeExecutedDatas = []
 let deleteEventCheck = null
+let willBeExecutedDeleteDatas = []
 let data;
 let type;
 let backup;
@@ -10,7 +12,7 @@ let btime;
 let backupkeys = []
 let backupvalues = []
 let backupcount = 0
-
+let backupdata = {}
 function padTo2Digits(num) {
   return num.toString().padStart(2, '0');
 }
@@ -147,15 +149,22 @@ class database extends EventEmitter{
       }
        setInterval(() => {
           if(check != null){
-        this.emit('dataSet', check)
+            for(data of willBeExecutedDatas) {
+        this.emit('dataSet', data)
+            }
         check = null
+        willBeExecutedDatas = []
           } else if(deleteEventCheck != null) {
-            this.emit('dataDelete', deleteEventCheck)
+            for(data of willBeExecutedDeleteDatas) {
+        this.emit('dataDelete', data)
+            }
             deleteEventCheck = null
+            willBeExecutedDeleteDatas = []
           }
-        }, 5000)
+        }, construct.eventInterval || 100)
     }
   }
+
     fetchDataFromFile() {
         let savedData;
 
@@ -184,20 +193,23 @@ class database extends EventEmitter{
         if(!key) throw Error("Getirilicek Veriyi Gir!")
         return this.data[key];
     }
-    has(key, returnValue=false) {
+    has(key, returnDatas=false) {
         if(!key) throw Error("Şartlanacak Veriyi Gir!")
-
-        if(returnValue === false){
+        
+        if(returnDatas === false){
         return Boolean(this.data[key]);
         } else {
           let result = Boolean(this.data[key]);
-          let values = Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8"))).filter(x=>x[0] === key).map(x=>x[1])
-
+          let data = Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8"))).filter(x=>x[0] === key).map(x=>x)
+          let obj = {}
+          obj[data[0][0]] = data[0][1]
+          
           return{
             result:result,
-            values:values
+            data:obj
           }
         }
+    }
     }
 
     set(key, value) {
@@ -218,8 +230,10 @@ class database extends EventEmitter{
           oldValue: old,
           value: value
         }
+          willBeExecutedDatas.push(check)
         if(backup == false){}else{
           backupcount += 1
+          backupdata[key] = value
           backupkeys.push(key)
           backupvalues.push(value)
           if(backupcount == btime){
@@ -228,7 +242,8 @@ class database extends EventEmitter{
               this.bdata[`Back-Up-${Math.floor(Math.random() * 1000000000000)}`] = {
                 date: formatDate(new Date()),
                 keys: backupkeys,
-                values: backupvalues
+                values: backupvalues,
+                data:backupdata
               }
               this.yedekle();
             }else if(btype == "txt") {
@@ -243,7 +258,7 @@ class database extends EventEmitter{
     delete(key) {
       const val = this.data[key]
         if(!key) {
-          throw Error("Silinicek Veriyi Gir!")
+          throw Error("Silinicek Veriyi Gir!")  
         } else {
         delete this.data[key];
         this.kaydet();
@@ -253,6 +268,7 @@ class database extends EventEmitter{
           key: key,
           value:val
         }
+          willBeExecutedDeleteDatas.push(deleteEventCheck)
         }
     }
 
@@ -434,53 +450,69 @@ math(key , islem , key2) {
         }
         }
     }
-     includes(key) {
-        if(!key) {
-            throw new TypeError("Lütfen database dosyasında aramak istediğiniz veri adını girin.") //falsis kzgın 😎
-        }
-        return fs.readFileSync(this.jsonFilePath).includes(key)
-    }
         all() {
         if(!this.jsonFilePath) {
             throw new TypeError("Database Dosyası Ayarlanmamış, okunacak dosya bulunamadı!")
         }
          return fs.readFileSync(`${this.jsonFilePath}`, "utf8")
         }
-        includesKey(key) {
+        includesKey(key, returnDatas=false) {
           if(!key) {
             throw new Error("Veri anahtarı belirtilmemiş.")
           } else {
-          return Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8")))
-          .filter(x=>x[0].includes(key)).length === 0 ? false : true
+            let data = Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8"))).filter(x=>x[0].includes(key))
+            if(returnDatas = false){
+return data.length > 0 ? true : false
+            }else {
+              let obj = {};
+              data.forEach(x=>{
+                obj[x[0]] = x[1]
+              })
+              return {
+                result:data.length > 0 ? true : false,
+                data:obj
+              }
+            
+            }
           }
         }
-        includesValue(value) {
+        includesValue(value,returnDatas=false) {
           if(!value) {
             throw new Error("Veri değeri belirtilmemiş.")
           } else {
-          return Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8")))
-          .filter(x=>x[1].includes(value)).length === 0 ? false : true
+            let data = Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8"))).filter(x=>x[1].includes(value))
+            if(returnDatas = false){
+return data.length > 0 ? true : false
+            }else {
+              let obj = {};
+              data.forEach(x=>{
+                obj[x[0]] = x[1]
+              })
+              return {
+                result:data.length > 0 ? true : false,
+                data:obj
+              }
+            
+            }
           }
         }
-
-        hasValue(value, returnKey=false){
+        
+        hasValue(value, returnDatas=false){
           if(!value){
             throw new Error("Değer belirtilmemiş.")
           }
-
-          if(returnKey == false){
-          return Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8")))
-          .filter(x=>x[1] === value).length === 0 ? false : true
-          } else {
-            let result = Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8")))
-          .filter(x=>x[1] === value).length === 0 ? false : true
-
-           let keys = Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8")))
-          .filter(x=>x[1] === value).map(x=>x[0])
-
+         let data = Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8"))).filter(x=>x[1] === value)
+          
+          if(returnDatas == false){
+          return data.length === 0 ? false : true
+          } else {          
+          let obj = {}
+            data.forEach(x=> {
+              obj[x[0]] = x[1]
+            })
             return{
-              result:result,
-              keys: keys
+              result:data.length > 0 ? true : false,
+              data:obj
             }
           }
         }
