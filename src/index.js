@@ -248,7 +248,7 @@ class database extends EventEmitter{
             }else if(btype == "txt") {
               fs.writeFileSync(backup, `Back-Up-${Math.floor(Math.random() * 1000000000000)} | ${formatDate(new Date())} | ${backupkeys} | ${backupvalues}`)
             }
-            console.log("Backup Alındı")
+            console.log("📝 Falsisdb Bilgilendirme: Yedekleme Alındı. Yedek ismi: Back-Up-" + Math.floor(Math.random() * 1000000000000) + ".")
           }
         }
         }
