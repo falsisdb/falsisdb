@@ -43,7 +43,6 @@ Yedekleme Dosyası Türü: Varsayılanı `txt` (Tür Girilen Dosyanın Uzantıs�
 Yedekleme Aralığı: Varsayılanı `5` veride bir.<br>
 Event Interval: Varsayılan `100` milisaniyede bir.<br><br>
 
-Not: **Modülün İçerisindeki `on()` fonksiyonu (eventler) diğer bütün fonksiyonların üstünde bulunmazsa, kodunuz çalışmayabilir.**
 ## Belgeler
 
 Daha fazla komuta ve örneğe bakmak için [Belgeleri](https://falsisdev.gitbook.io/falsisdb/) ziyaret edebilirsiniz.
