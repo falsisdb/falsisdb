@@ -24,7 +24,7 @@ const db = new falsisdb({
         type: "BURAYA YEDEKLEME DOSYASININ TÜRÜ YAZILACAK | json veya txt (json önerilir)", //isteğe bağlı
         time: 5 //BURAYA YEDEKLEMENIN KAÇ VERIDE BIR YAPILACAGI YAZILACAK VARSAYILAN = 5 //isteğe bağlı
     },
-    eventInterval: 100 //BURAYA EVENTLERIN KAC MILISANIYEDE (MS) BIR GERCEKLESECEGI YAZILACAK VARSAYILAN = 100ms //isteğe bağlı
+    eventInterval: 100 //BURAYA EVENTLERIN KAC MILISANIYEDE (MS) BIR KONTROL EDİLECEĞİ YAZILACAK VARSAYILAN = 100ms //isteğe bağlı
 })
 ```
 
@@ -34,7 +34,7 @@ const db = new falsisdb({
 `backupPath` veya `backup.path`: Yedekleme Alınacak Dosyayı Tanımlar.<br>
 `backupType` veya `backup.type`: Yedekleme Alınacak Dosyanın Türünü Tanımlar.<br>
 `backupTime` veya `backup.time`: Yedeklemenin Kaç Veride Bir Yapılacağını Tanımlar.<br>
-`eventInterval`: Eventlerin kaç veride bir gerçekleşeceğini tanımlar<br><br>
+`eventInterval`: Eventlerin ne kadar sürede bir kontrol edileceğini tanımlar<br><br>
 Yukarıdaki Paragraftaki tüm ögeler ve nesneler isteğe bağlıdır. Eğer Yazılmazsa Aşağıdakiler Uygulanır.<br>
 Veri Tabanı Dosyası: Varsayılanı `./falsisdb/database.json`<br>
 Yedekleme: Eğer hiçbir şey tanımlanmazsa yedekleme alınmaz. Ancak Aşağıdakilerden Herhangi Biri Bile Tanımlanırsa Varsayılanlar Aşağıdaki Gibi Olur. <br>
