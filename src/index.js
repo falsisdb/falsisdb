@@ -403,7 +403,7 @@ class database extends EventEmitter{
         return{
             name: "falsisdb",
             type: "JsonDatabase",
-            version: "2.2.8",
+            version: "2.3.0",
             owner: "falsisdev",
             developers: ["falsisdev", "lunexdev", "berat141"],
             github: "https://github.com/falsisdev/falsisdb",
