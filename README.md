@@ -23,7 +23,8 @@ const db = new falsisdb({
         path: "BURAYA YEDEKLEME DOSYASININ DOSYA KONUMU YAZILACAK", //isteğe bağlı
         type: "BURAYA YEDEKLEME DOSYASININ TÜRÜ YAZILACAK | json veya txt (json önerilir)", //isteğe bağlı
         time: 5 //BURAYA YEDEKLEMENIN KAÇ VERIDE BIR YAPILACAGI YAZILACAK VARSAYILAN = 5 //isteğe bağlı
-    }
+    },
+    eventInterval: 100 //BURAYA EVENTLERIN KAC MILISANIYEDE (MS) BIR GERCEKLESECEGI YAZILACAK VARSAYILAN = 100ms //isteğe bağlı
 })
 ```
 
@@ -32,13 +33,15 @@ const db = new falsisdb({
 `backup` nesnesi `type`, `path` ve `time` ögelerini içerir.<br>
 `backupPath` veya `backup.path`: Yedekleme Alınacak Dosyayı Tanımlar.<br>
 `backupType` veya `backup.type`: Yedekleme Alınacak Dosyanın Türünü Tanımlar.<br>
-`backupTime` veya `backup.time`: Yedeklemenin Kaç Veride Bir Yapılacağını Tanımlar.<br><br>
+`backupTime` veya `backup.time`: Yedeklemenin Kaç Veride Bir Yapılacağını Tanımlar.<br>
+`eventInterval`: Eventlerin kaç veride bir gerçekleşeceğini tanımlar<br><br>
 Yukarıdaki Paragraftaki tüm ögeler ve nesneler isteğe bağlıdır. Eğer Yazılmazsa Aşağıdakiler Uygulanır.<br>
 Veri Tabanı Dosyası: Varsayılanı `./falsisdb/database.json`<br>
 Yedekleme: Eğer hiçbir şey tanımlanmazsa yedekleme alınmaz. Ancak Aşağıdakilerden Herhangi Biri Bile Tanımlanırsa Varsayılanlar Aşağıdaki Gibi Olur. <br>
 Yedekleme Dosyası: Varsayılanı `./falsisdb/backup.txt` (Uzantı girilen tipe göre değişir.)<br>
 Yedekleme Dosyası Türü: Varsayılanı `txt` (Tür Girilen Dosyanın Uzantısına Göre Değişir.)<br>
-Yedekleme Aralığı: Varsayılanı `5` veride bir.<br><br>
+Yedekleme Aralığı: Varsayılanı `5` veride bir.<br>
+Event Interval: Varsayılan `100` milisaniyede bir.<br><br>
 
 Not: **Modülün İçerisindeki `on()` fonksiyonu (eventler) diğer bütün fonksiyonların üstünde bulunmazsa, kodunuz çalışmayabilir.**
 ## Belgeler
