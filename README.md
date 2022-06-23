@@ -24,7 +24,7 @@ const db = new falsisdb({
         type: "BURAYA YEDEKLEME DOSYASININ TÜRÜ YAZILACAK | json veya txt (json önerilir)", //isteğe bağlı
         time: 5 //BURAYA YEDEKLEMENIN KAÇ VERIDE BIR YAPILACAGI YAZILACAK VARSAYILAN = 5 //isteğe bağlı
     },
-    eventInterval: 100 //BURAYA EVENTLERIN KAC MILISANIYEDE (MS) BIR GERCEKLESECEGI YAZILACAK VARSAYILAN = 100ms //isteğe bağlı
+    eventInterval: 100 //BURAYA EVENTLERIN KAC MILISANIYEDE (MS) BIR KONTROL EDİLECEĞİ YAZILACAK VARSAYILAN = 100ms //isteğe bağlı
 })
 ```
 
