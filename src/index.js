@@ -189,7 +189,17 @@ class database extends EventEmitter{
         writeFileWithDirs(JSON.stringify(this.data, null, 2), this.jsonFilePath);
     }
     yedekle() {
-      writeFileWithDirs(JSON.stringify(this.bdata, null, 2), this.backup);
+      if(fs.readFileSync(this.backup) == "") {
+        var a = ""
+        var b = JSON.stringify(this.bdata)
+      }else{
+      var a = String(fs.readFileSync(this.backup)).replace(/.$/,",")
+      var b = String(JSON.stringify(this.bdata).replace("{", ""))
+      }
+      //console.log(`${a} ve ${b}`)
+      fs.writeFile(this.backup, `${a}\n${b}`, "utf-8", (err) => {
+        if (err) throw err;
+      });
   }
     get(key) {
         if(!key) {
@@ -257,7 +267,9 @@ class database extends EventEmitter{
               }
               this.yedekle();
             }else if(this.btype == "txt") {
-              fs.writeFileSync(this.backup, `Back-Up-${this.bcount} | ${formatDate(new Date())} | ${this.backupkeys} | ${this.backupvalues}`)
+              fs.writeFile(this.backup, `${fs.readFileSync(this.backup)}\nBack-Up-${this.bcount} | ${formatDate(new Date())} | ${this.backupkeys} | ${this.backupvalues}`, "utf-8", (err) => {
+                if (err) throw err;
+              });
             }
             console.log("📝 Falsisdb Bilgilendirme: Yedekleme Alındı. Yedek ismi: Back-Up-" + this.bcount + ".")
             fs.writeFileSync(process.cwd() + "/falsisdb/development.json", JSON.stringify(JSON.parse(`{"backupcount": ${Number(this.bcount) + 1}}`)))
