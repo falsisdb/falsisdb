@@ -55,6 +55,7 @@ class database extends EventEmitter{
     this.backupkeys = [];
     this.backupvalues = [];
     this.backupcount = 0;
+    this.bcount = Number(JSON.stringify(JSON.parse(fs.readFileSync(__dirname + "/development.json")).backupcount))
     this.backupdata = {};
     this.eventsArray = [];
     this.bdata = {};
@@ -247,7 +248,7 @@ class database extends EventEmitter{
           if(this.backupcount == this.btime){
             this.backupcount = 0
             if(this.btype == "json") {
-              this.bdata[`Back-Up-${Math.floor(Math.random() * 1000000000000)}`] = {
+              this.bdata[`Back-Up-${this.bcount}`] = {
                 date: formatDate(new Date()),
                 keys: this.backupkeys,
                 values: this.backupvalues,
@@ -255,9 +256,10 @@ class database extends EventEmitter{
               }
               this.yedekle();
             }else if(this.btype == "txt") {
-              fs.writeFileSync(this.backup, `Back-Up-${Math.floor(Math.random() * 1000000000000)} | ${formatDate(new Date())} | ${this.backupkeys} | ${this.backupvalues}`)
+              fs.writeFileSync(this.backup, `Back-Up-${this.bcount} | ${formatDate(new Date())} | ${this.backupkeys} | ${this.backupvalues}`)
             }
-            console.log("📝 Falsisdb Bilgilendirme: Yedekleme Alındı. Yedek ismi: Back-Up-" + Math.floor(Math.random() * 1000000000000) + ".")
+            console.log("📝 Falsisdb Bilgilendirme: Yedekleme Alındı. Yedek ismi: Back-Up-" + this.bcount + ".")
+            fs.writeFileSync(__dirname + "/development.json", JSON.stringify(JSON.parse(`{"backupcount": ${Number(this.bcount) + 1}}`)))
           }
         }
         }
