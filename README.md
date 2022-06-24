@@ -43,15 +43,48 @@ Yedekleme Dosyası Türü: Varsayılanı `txt` (Tür Girilen Dosyanın Uzantıs�
 Yedekleme Aralığı: Varsayılanı `5` veride bir.<br>
 Event Interval: Varsayılan `100` milisaniyede bir.<br><br>
 
-## Belgeler
+## Event Sistemi
 
-Daha fazla komuta ve örneğe bakmak için [Belgeleri](https://falsisdev.gitbook.io/falsisdb/) ziyaret edebilirsiniz.
+`type`: event türünü belirler
+`status`: aktif olup olmadığını belirler
+`code`: event devreye girdiğinde çalıştırılacak kod
 
-## Api
+- Ready
+Ready Eventi Proje Başlatıldığında Yapılacak Kodu Tanımlamacak İçin Kullanılır.
+```js
+db.on({
+    type: "ready",
+    status:"aktif",
+    code:`console.log("Ready eventi çalışıyor")`
+})
+```
 
-Komutların tek bir yerde toplandığı [api sitemiz](https://falsisdb.falsisdev.repl.co)i ziyaret edebilirsiniz.
+- DataSet
+dataSet eventi bir veri eklendiğinde tetiklenecek kodu tanımlamak için kullanılr.
+```js
+db.on({
+	type:"dataSet",
+	status:"aktif",
+	code:`console.log("Veri tabanına %value% değeri olan %key% verisi eklendi")`
+})
+```
 
-## FalsisDB
+- DataDelete
+dataDelete eventi bir veri silindiğinde tetiklenecek kodu tanımlamak için kullanılr.
+```js
+db.on({
+	type:"dataDelete",
+	status:"aktif",
+	code:`console.log("Veri tabanından %value% değeri olan %key% verisi silindi.")`
+})
+```
+
+`%key%`: İşleme Giren Veri İsmi
+`%value%`: İşleme Giren Veri Değeri
+
+## Geliştirme
+
+<img src="https://cdn.discordapp.com/attachments/775822548519616562/989824612697264178/falsisdb_0DE118C.png">
 
 Teşekkürler: [lunexdev](https://github.com/lunexdev), [berat141](https://github.com/berat141), [aloima](https://github.com/aloima), [iamashley0](https://github.com/iamashley0)
 
