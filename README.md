@@ -1,6 +1,6 @@
 # Falsisdb
 
-Falsisdb; Türkçe, hızlı, güvenilir, kullanışlı, açık kaynak kodlu, event destekli json database modülü.
+Falsisdb; Türkçe, hızlı, güvenilir, kullanışlı, açık kaynak kodlu, event ve yedekleme destekli, json database modülü.
 
 ## Kurulum
 
