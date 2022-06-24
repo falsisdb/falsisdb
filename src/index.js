@@ -1,18 +1,4 @@
 const fs = require("fs");
-let clearfunc;
-let check = null
-let willBeExecutedDatas = []
-let deleteEventCheck = null
-let willBeExecutedDeleteDatas = []
-let data;
-let type;
-let backup;
-let btype;
-let btime;
-let backupkeys = []
-let backupvalues = []
-let backupcount = 0
-let backupdata = {}
 
 function padTo2Digits(num) {
   return num.toString().padStart(2, '0');
@@ -54,120 +40,142 @@ const EventEmitter = require("events")
 class database extends EventEmitter{
   constructor(construct) {
     super();
+    this.data = {};
+    this.lastData = null;
+    this.lastDataType = null;
+    this.clearfunc = undefined;
+    this.check = null;
+    this.willBeExecutedDatas = [];
+    this.deleteEventCheck = null;
+    this.willBeExecutedDeleteDatas = [];
+    this.type = undefined;
+    this.backup = undefined;
+    this.btype = undefined;
+    this.btime = undefined;
+    this.backupkeys = [];
+    this.backupvalues = [];
+    this.backupcount = 0;
+    this.backupdata = {};
+    this.eventsArray = [];
+    this.bdata = {};
+      this.jsonFilePath = construct.filePath || "./falsisdb/database.json";
     if(!construct.backup) {
       if(!construct.backupPath) {
         if(!construct.backupType) {
-          backup = false
+          this.backup = false
         }else {
           let a = construct.backupType == "txt" ? "txt" : construct.backupType == "json" ? "json" : "error"
           if(a == "error") throw new Error("❌ FalsisDB Hatası: Geçersiz Yedekleme Tipi Girildi. Lütfen Yedekleme Tipini json veya txt Olarak Değiştirin.")
           
-          btype = a
-          backup = "./falsisdb/backup." + btype
-          btime = construct.backupTime || 5
-          if(backup.slice("-3") == "txt") {
-            if(btype !== "txt") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
-          }else if(backup.slice("-3") == "son") {
-            if(btype !== "json") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
+          this.btype = a
+          this.backup = "./falsisdb/backup." + this.btype
+          this.btime = construct.backupTime || 5
+          if(this.backup.slice("-3") == "txt") {
+            if(this.btype !== "txt") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
+          }else if(this.backup.slice("-3") == "son") {
+            if(this.btype !== "json") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
           }
-          if(!fs.existsSync(backup) || !fs.lstatSync(backup).isFile()) {
-            if(btype == "json") writeFileWithDirs("[{}]", backup)
-            if(btype == "txt") writeFileWithDirs(`Backup Oluşturuldu | ${formatDate(new Date())} | {}`, backup)
+          if(!fs.existsSync(this.backup) || !fs.lstatSync(this.backup).isFile()) {
+            if(this.btype == "json") writeFileWithDirs("[{}]", this.backup)
+            if(this.btype == "txt") writeFileWithDirs(`Backup Oluşturuldu | ${formatDate(new Date())} | {}`, this.backup)
           }else {}
         }
       }else {
         if(!construct.backupType) {
-          backup = construct.backupPath
-          btype = construct.backupPath.slice("-3") == "son" ? "json" : construct.backupPath.slice("-3") == "txt" ? "txt" : undefined
-          btime = construct.backupTime || 5
-          if(backup.slice("-3") == "txt") {
-            if(btype !== "txt") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
-          }else if(backup.slice("-3") == "son") {
-            if(btype !== "json") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
+          this.backup = construct.backupPath
+          this.btype = construct.backupPath.slice("-3") == "son" ? "json" : construct.backupPath.slice("-3") == "txt" ? "txt" : undefined
+          this.btime = construct.backupTime || 5
+          if(this.backup.slice("-3") == "txt") {
+            if(this.btype !== "txt") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
+          }else if(this.backup.slice("-3") == "son") {
+            if(this.btype !== "json") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
           }
-          if(!fs.existsSync(backup) || !fs.lstatSync(backup).isFile()) {
-            if(btype == "json") writeFileWithDirs("[{}]", backup)
-            if(btype == "txt") writeFileWithDirs(`Backup Oluşturuldu | ${formatDate(new Date())} | {}`, backup)
+          if(!fs.existsSync(this.backup) || !fs.lstatSync(this.backup).isFile()) {
+            if(this.btype == "json") writeFileWithDirs("[{}]", this.backup)
+            if(this.btype == "txt") writeFileWithDirs(`Backup Oluşturuldu | ${formatDate(new Date())} | {}`, this.backup)
           }else {}
         }else{
         let a = construct.backupType == "txt" ? "txt" : construct.backupType == "json" ? "json" : "error"
         if(a == "error") throw new Error("❌ FalsisDB Hatası: Geçersiz Yedekleme Tipi Girildi. Lütfen Yedekleme Tipini json veya txt Olarak Değiştirin.")
-        backup = construct.backupPath
-        btype = a
-        btime = construct.backupTime || 5
-        if(backup.slice("-3") == "txt") {
-          if(btype !== "txt") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
-        }else if(backup.slice("-3") == "son") {
-          if(btype !== "json") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
+        this.backup = construct.backupPath
+        this.btype = a
+        this.btime = construct.backupTime || 5
+        if(this.backup.slice("-3") == "txt") {
+          if(this.btype !== "txt") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
+        }else if(this.backup.slice("-3") == "son") {
+          if(this.btype !== "json") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
         }
-        if(!fs.existsSync(backup) || !fs.lstatSync(backup).isFile()) {
-          if(btype == "json") writeFileWithDirs("[{}]", backup)
-          if(btype == "txt") writeFileWithDirs(`Backup Oluşturuldu | ${formatDate(new Date())} | {}`, backup)
+        if(!fs.existsSync(this.backup) || !fs.lstatSync(this.backup).isFile()) {
+          if(this.btype == "json") writeFileWithDirs("[{}]", this.backup)
+          if(this.btype == "txt") writeFileWithDirs(`Backup Oluşturuldu | ${formatDate(new Date())} | {}`, this.backup)
         }else {}
         }
       }
     }else {
       if(!construct.backup.path) {
         if(!construct.backup.type) {
-          backup = false
+          this.backup = false
         }else{
           let a = construct.backup.type == "txt" ? "txt" : construct.backup.type == "json" ? "json" : "error"
           if(a == "error") throw new Error("❌ FalsisDB Hatası: Geçersiz Yedekleme Tipi Girildi. Lütfen Yedekleme Tipini json veya txt Olarak Değiştirin.")
           
-        btype = a
-        backup = "./falsisdb/backup." + btype
-        btime = construct.backup.time || 5
-        if(backup.slice("-3") == "txt") {
-          if(btype !== "txt") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
-        }else if(backup.slice("-3") == "son") {
-          if(btype !== "json") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
+        this.btype = a
+        this.backup = "./falsisdb/backup." + this.btype
+        this.btime = construct.backup.time || 5
+        if(this.backup.slice("-3") == "txt") {
+          if(this.btype !== "txt") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
+        }else if(this.backup.slice("-3") == "son") {
+          if(this.btype !== "json") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
         }
-        if(!fs.existsSync(backup) || !fs.lstatSync(backup).isFile()) {
-          if(btype == "json") writeFileWithDirs("[{}]", backup)
-          if(btype == "txt") writeFileWithDirs(`Backup Oluşturuldu | ${formatDate(new Date())} | {}`, backup)
+        if(!fs.existsSync(this.backup) || !fs.lstatSync(this.backup).isFile()) {
+          if(this.btype == "json") writeFileWithDirs("[{}]", this.backup)
+          if(this.btype == "txt") writeFileWithDirs(`Backup Oluşturuldu | ${formatDate(new Date())} | {}`, this.backup)
         }else {}
       }
     }
-    backup = construct.backup.path || "./falsisdb/backup." + btype
-    btype = construct.backup.type || backup.slice("-3") == "son" ? "json" : backup.slice("-3") == "txt" ? "txt" : undefined
-    btime = construct.backup.time || 5
-    if(backup.slice("-3") == "txt") {
-      if(btype !== "txt") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
-    }else if(backup.slice("-3") == "son") {
-      if(btype !== "json") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
+    this.backup = construct.backup.path || "./falsisdb/backup." + this.btype
+    this.btype = construct.backup.type || this.backup.slice("-3") == "son" ? "json" : this.backup.slice("-3") == "txt" ? "txt" : undefined
+    this.btime = construct.backup.time || 5
+    if(this.backup.slice("-3") == "txt") {
+      if(this.btype !== "txt") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
+    }else if(this.backup.slice("-3") == "son") {
+      if(this.btype !== "json") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
     }
-    if(!fs.existsSync(backup) || !fs.lstatSync(backup).isFile()) {
-      if(btype == "json") writeFileWithDirs("[{}]", backup)
-      if(btype == "txt") writeFileWithDirs(`Backup Oluşturuldu | ${formatDate(new Date())} | {}`, backup)
+    if(!fs.existsSync(this.backup) || !fs.lstatSync(this.backup).isFile()) {
+      if(this.btype == "json") writeFileWithDirs("[{}]", this.backup)
+      if(this.btype == "txt") writeFileWithDirs(`Backup Oluşturuldu | ${formatDate(new Date())} | {}`, this.backup)
     }else {}
-      this.bdata = {};
-      this.jsonFilePath = construct.filePath || "./falsisdb/database.json";
-      this.data = {};
-      if (!fs.existsSync(this.jsonFilePath) || !fs.lstatSync(this.jsonFilePath).isFile()) {
+      /*if (!fs.existsSync(this.jsonFilePath) || !fs.lstatSync(this.jsonFilePath).isFile()) {
+          writeFileWithDirs("{}", this.jsonFilePath);
+      } else {
+          this.fetchDataFromFile();
+          console.log(this.data)
+      }*/
+      
+    }
+    if (!fs.existsSync(this.jsonFilePath) || !fs.lstatSync(this.jsonFilePath).isFile()) {
           writeFileWithDirs("{}", this.jsonFilePath);
       } else {
           this.fetchDataFromFile();
       }
-       setInterval(() => {
-          if(check != null){
-            for(data of willBeExecutedDatas) {
+    setInterval(() => {
+          if(this.check != null){
+            for(const data of this.willBeExecutedDatas) {
         this.emit('dataSet', data)
             }
-        check = null
-        willBeExecutedDatas = []
-          } else if(deleteEventCheck != null) {
-            for(data of willBeExecutedDeleteDatas) {
+        this.check = null
+        this.willBeExecutedDatas = []
+          } else if(this.deleteEventCheck != null) {
+            for(const data of this.willBeExecutedDeleteDatas) {
         this.emit('dataDelete', data)
             }
-            deleteEventCheck = null
-            willBeExecutedDeleteDatas = []
+            this.deleteEventCheck = null
+            this.willBeExecutedDeleteDatas = []
           }
         }, construct.eventInterval || 100)
-    }
   }
     fetchDataFromFile() {
         let savedData;
-
         try {
           savedData = JSON.parse(fs.readFileSync(this.jsonFilePath));
         } catch(error) {}
@@ -179,7 +187,7 @@ class database extends EventEmitter{
         writeFileWithDirs(JSON.stringify(this.data, null, 2), this.jsonFilePath);
     }
     yedekle() {
-      writeFileWithDirs(JSON.stringify(this.bdata, null, 2), backup);
+      writeFileWithDirs(JSON.stringify(this.bdata, null, 2), this.backup);
   }
     get(key) {
         if(!key) {
@@ -195,14 +203,15 @@ class database extends EventEmitter{
     }
     has(key, returnDatas=false) {
         if(!key) throw Error("❌ FalsisDB Hatası: Veri Tabanında Varlığı Kontrol Edilecek Veri Bulunamadı. Lütfen Şartlanacak Veriyi Girin.")
+     // this.fetchDataFromFile()
 
         if(returnDatas === false){
         return Boolean(this.data[key]);
         } else {
           let result = Boolean(this.data[key]);
-          let data = Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8"))).filter(x=>x[0] === key).map(x=>x)
+          let data = Object.entries(JSON.parse(fs.readFileSync(this.jsonFilePath, "utf-8"))).filter(x=>x[0] === key)
           let obj = {}
-          obj[data[0][0]] = data[0][1]
+          result == true ? obj[data[0][0]] = data[0][1] : ""
           
           return{
             result:result,
@@ -221,32 +230,32 @@ class database extends EventEmitter{
         } else {
         this.data[key] = value;
         this.kaydet();
-        data = value
-        type = "set"
-        check = {
+        const data = {
           key: key,
           changed: old == this.data[key] ? false : true,
           oldValue: old,
           value: value
         }
-          willBeExecutedDatas.push(check)
-        if(backup == false){}else{
-          backupcount += 1
-          backupdata[key] = value
-          backupkeys.push(key)
-          backupvalues.push(value)
-          if(backupcount == btime){
-            backupcount = 0
-            if(btype == "json") {
+        this.check = data
+        this.willBeExecutedDatas.push(data)
+          //console.log(this.check)
+        if(this.backup == false){}else{
+          this.backupcount += 1
+          this.backupdata[key] = value
+          this.backupkeys.push(key)
+          this.backupvalues.push(value)
+          if(this.backupcount == this.btime){
+            this.backupcount = 0
+            if(this.btype == "json") {
               this.bdata[`Back-Up-${Math.floor(Math.random() * 1000000000000)}`] = {
                 date: formatDate(new Date()),
-                keys: backupkeys,
-                values: backupvalues,
-                data:backupdata
+                keys: this.backupkeys,
+                values: this.backupvalues,
+                data:this.backupdata
               }
               this.yedekle();
-            }else if(btype == "txt") {
-              fs.writeFileSync(backup, `Back-Up-${Math.floor(Math.random() * 1000000000000)} | ${formatDate(new Date())} | ${backupkeys} | ${backupvalues}`)
+            }else if(this.btype == "txt") {
+              fs.writeFileSync(this.backup, `Back-Up-${Math.floor(Math.random() * 1000000000000)} | ${formatDate(new Date())} | ${this.backupkeys} | ${this.backupvalues}`)
             }
             console.log("📝 Falsisdb Bilgilendirme: Yedekleme Alındı. Yedek ismi: Back-Up-" + Math.floor(Math.random() * 1000000000000) + ".")
           }
@@ -261,13 +270,11 @@ class database extends EventEmitter{
         } else {
         delete this.data[key];
         this.kaydet();
-        data = key
-        type = "delete"
-        deleteEventCheck = {
+        this.deleteEventCheck = {
           key: key,
           value:val
         }
-          willBeExecutedDeleteDatas.push(deleteEventCheck)
+          this.willBeExecutedDeleteDatas.push(this.deleteEventCheck)
         }
     }
 
@@ -283,10 +290,9 @@ class database extends EventEmitter{
         } else {
           this.data[key] += count.toString();
         }
-
+        this.lastData = count;
+        this.lastDataType = "conc"
         this.kaydet();
-        data = count
-        type = "conc"
     }
 
     multi(key, count) {
@@ -304,9 +310,9 @@ class database extends EventEmitter{
         } else {
           this.data[key] *= count;
         }
+        this.lastData = count;
+        this.lastDataType = "multi"
         this.kaydet();
-        data = count
-        type = "multi"
     }
 
     divide(key, count) {
@@ -324,10 +330,9 @@ class database extends EventEmitter{
         } else {
           this.data[key] /= count;
         }
-
+        this.lastData = count;
+        this.lastDataType = "divide"
         this.kaydet();
-        data = count
-        type = "divide"
     }
 
     sum(key, count) {
@@ -345,10 +350,9 @@ class database extends EventEmitter{
           } else {
           this.data[key] += count;
         }
-
+        this.lastData = count;
+        this.lastDataType = "sum"
         this.kaydet();
-        data = count
-        type = "sum"
     }
 
     sub(key, count) {
@@ -366,10 +370,9 @@ class database extends EventEmitter{
         } else {
           this.data[key] -= count;
         }
-
+        this.lastData = count;
+        this.lastDataType = "sub"
         this.kaydet();
-        data = count
-        type = "sum"
     }
     push(key, element) {
         if(!key) {
@@ -386,8 +389,8 @@ class database extends EventEmitter{
         } else {
         this.data[key].push(element)
         this.kaydet();
-        data = element
-        type = "push (array)"
+        this.lastData = element;
+        this.lastDataType = "push"
         }
       }
 
@@ -409,12 +412,12 @@ class database extends EventEmitter{
             github: "https://github.com/falsisdev/falsisdb",
             commands: `${Object.entries("./src/index.js").length}`,
             pathfile: this.jsonFilePath,
-            backupfile: backup,
-            backuptype: btype,
-            backuptime: btime,
+            backupfile: this.backup,
+            backuptype: this.btype,
+            backuptime: this.btime,
             lastdata: {
-            data: data || null,
-            type: type || null
+            data: this.lastData,
+            type: this.lastDataType
         }
         }
     }
