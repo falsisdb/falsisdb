@@ -40,6 +40,7 @@ const EventEmitter = require("events")
 class database extends EventEmitter{
   constructor(construct) {
     super();
+    if(fs.existsSync(process.cwd() + "/falsisdb/development.json") == false) writeFileWithDirs(`{"backupcount": 0}`, process.cwd() + "/falsisdb/development.json")
     this.data = {};
     this.lastData = null;
     this.lastDataType = null;
@@ -55,7 +56,7 @@ class database extends EventEmitter{
     this.backupkeys = [];
     this.backupvalues = [];
     this.backupcount = 0;
-    this.bcount = Number(JSON.stringify(JSON.parse(fs.readFileSync(__dirname + "/development.json")).backupcount))
+    this.bcount = Number(JSON.stringify(JSON.parse(fs.readFileSync(process.cwd() + "/falsisdb/development.json")).backupcount))
     this.backupdata = {};
     this.eventsArray = [];
     this.bdata = {};
@@ -259,7 +260,7 @@ class database extends EventEmitter{
               fs.writeFileSync(this.backup, `Back-Up-${this.bcount} | ${formatDate(new Date())} | ${this.backupkeys} | ${this.backupvalues}`)
             }
             console.log("📝 Falsisdb Bilgilendirme: Yedekleme Alındı. Yedek ismi: Back-Up-" + this.bcount + ".")
-            fs.writeFileSync(__dirname + "/development.json", JSON.stringify(JSON.parse(`{"backupcount": ${Number(this.bcount) + 1}}`)))
+            fs.writeFileSync(process.cwd() + "/falsisdb/development.json", JSON.stringify(JSON.parse(`{"backupcount": ${Number(this.bcount) + 1}}`)))
           }
         }
         }
