@@ -2,7 +2,7 @@ const falsis = require("./src/index.js")
 const db = new falsis({
 filePath: "./falsisdb/database.json",
 backup: {
-	path: "./falsisdb/backup.json",
+	path: "./falsisdb/backup.txt",
 	time: 5
 }
 })
