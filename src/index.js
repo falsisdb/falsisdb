@@ -40,7 +40,7 @@ const EventEmitter = require("events")
 class database extends EventEmitter{
   constructor(construct) {
     super();
-    if(fs.existsSync(__dirname + "/falsisdb/development.json") == false) writeFileWithDirs(`{"backupcount": 0}`, __dirname + "/falsisdb/development.json")
+    if(fs.existsSync(__dirname.slice(0, -4) + "/falsisdb/development.json") == false) writeFileWithDirs(`{"backupcount": 0}`, __dirname + "/falsisdb/development.json")
     this.data = {};
     this.lastData = null;
     this.lastDataType = null;
@@ -272,7 +272,7 @@ class database extends EventEmitter{
               });
             }
             console.log("📝 Falsisdb Bilgilendirme: Yedekleme Alındı. Yedek ismi: Back-Up-" + this.bcount + ".")
-            fs.writeFileSync(__dirname + "/falsisdb/development.json", JSON.stringify(JSON.parse(`{"backupcount": ${Number(this.bcount) + 1}}`)))
+            fs.writeFileSync(__dirname.slice(0, -4) + "/falsisdb/development.json", JSON.stringify(JSON.parse(`{"backupcount": ${Number(this.bcount) + 1}}`)))
           }
         }
         }
