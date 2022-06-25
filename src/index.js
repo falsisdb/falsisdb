@@ -80,7 +80,7 @@ class database extends EventEmitter{
             if(this.btype !== "json") throw new Error("❌ FalsisDB Hatası: Girilen Yedekleme Dosyası Uzantısı ile Yedekleme Türü Eşleşmiyor. Lütfen İkisini de Aynı Olacak Biçimde Değiştirin.")
           }
           if(!fs.existsSync(this.backup) || !fs.lstatSync(this.backup).isFile()) {
-            if(this.btype == "json") writeFileWithDirs("{}", this.backup)
+            if(this.btype == "json") writeFileWithDirs("", this.backup)
             if(this.btype == "txt") writeFileWithDirs(`Backup Oluşturuldu | ${formatDate(new Date())} | {}`, this.backup)
           }else {}
         }
