@@ -194,6 +194,9 @@ class database extends EventEmitter{
       if(fs.readFileSync(this.backup) == "") {
         var a = ""
         var b = JSON.stringify(this.bdata)
+      }else if(fs.readFileSync(this.backup) == "{}") {
+        var a = ""
+        var b = JSON.stringify(this.bdata)
       }else{
       var a = String(fs.readFileSync(this.backup)).replace(/.$/,",")
       var b = String(JSON.stringify(this.bdata).replace("{", ""))
