@@ -13,6 +13,16 @@ function formatDate(date) {
   ].join('/');
 }
 
+const arrayIncludes = (array,input) => {
+  let res;
+  for(const i of array){
+    if(i == input){
+      res = true 
+      break;
+    } else{res=false;continue}
+  }
+  return res
+}
 const writeFileWithDirs = ((data, path) => {
     const dirs = path.split("/").slice(1, -1);
 
@@ -47,7 +57,6 @@ class database extends EventEmitter{
     this.data = {};
     this.lastData = null;
     this.lastDataType = null;
-    this.clearfunc = undefined;
     this.check = null;
     this.willBeExecutedDatas = [];
     this.deleteEventCheck = null;
@@ -58,12 +67,13 @@ class database extends EventEmitter{
     this.btime = undefined;
     this.backupkeys = [];
     this.backupvalues = [];
-    this.backupcount = 0;
-    this.bcount = Number(JSON.stringify(JSON.parse(fs.readFileSync( __dirname.slice(0, -4) + "/falsisdb/development.json")).backupcount))
+    this.backupcount = "0";
     this.backupdata = {};
     this.eventsArray = [];
     this.bdata = {};
+    this.lastBackupData = {}
       this.jsonFilePath = construct.filePath || "./falsisdb/database.json";
+    this.dataStore = {}
     if(!construct.backup) {
       if(!construct.backupPath) {
         if(!construct.backupType) {
@@ -178,7 +188,62 @@ class database extends EventEmitter{
             this.willBeExecutedDeleteDatas = []
           }
         }, construct.eventInterval || 100)
+    if(this.backup != false) {
+      const backupDB = require("./")
+      this.lastBackupData.backupDB = new backupDB({filePath:"./falsisdb/backupData.json"})
+      this.getBackupData = () => {
+        let res = {}; Object.entries(JSON.parse(fs.readFileSync(this.backup, "utf-8"))).map(x=>Object.entries(x[1].data)).forEach(x=> {
+          x.forEach(u => {
+            res[u[0]] = u[1]
+          })
+        
+        })
+        return res
+      }
+      if(fs.readFileSync(this.backup,"utf-8") == "") {
+        fs.writeFileSync(this.backup, "{}","utf-8")
+      } else if(fs.readFileSync("./falsisdb/backupData.json","utf-8") == "{}") {
+        this.lastBackupData.backupDB.set("backupcount","0")
+        this.lastBackupData.backupDB.set("count","0")
+        this.lastBackupData.backupDB.set("lastData",{})        
+      }
+          /*if(!fs.existsSync("./falsisdb/backupData.json") || !fs.lstatSync("./falsisdb/backupData.json").isFile()){
+            console.log("a")
+        writeFileWithDirs(`{
+          "backupcount":"0",
+          "count":"0",
+          "lastData":{}
+        }`, "./falsisdb/backupData.json")
+          } else*/ if(!this.lastBackupData.backupDB.get("backupcount") || isNaN(this.lastBackupData.backupDB.get("backupcount"))) {
+this.lastBackupData.backupDB.set("backupcount", "0") 
+    
+      } 
+          if(this.lastBackupData.backupDB.get("count") === undefined || isNaN(parseInt(this.lastBackupData.backupDB.get("count")))) {
+this.lastBackupData.backupDB.set("count", "0")
+      }
+          if(this.lastBackupData.backupDB.get("lastData") === undefined) {
+        this.lastBackupData.backupDB.set("lastData", {})
+      } 
+        this.backupcount = this.lastBackupData.backupDB.get("backupcount")
+        if(Object.entries(JSON.parse(fs.readFileSync(this.backup, "utf-8"))).length != 0){
+          /*console.log(this.backupdata)
+          console.log(Object.entries(JSON.parse(fs.readFileSync(this.backup, "utf-8")))[0][1].data)*/
+   this.backupdata = JSON.parse(fs.readFileSync(this.backup, "utf-8"))
+      
+    }
+  if(Object.entries(this.backupdata).length != 0){  
+      this.backupkeys = Object.entries(this.getBackupData()).map(x=>x[0])
+    //Object.entries(JSON.parse(fs.readFileSync(this.backup,"utf-8"))).map(x=>Object.entries(x[1].data)[0][0])
+
+      this.backupvalues = Object.entries(this.getBackupData()).map(x=>x[1])
+    //Object.entries(JSON.parse(fs.readFileSync(this.backup,"utf-8"))).map(x=>Object.entries(x[1].data)[0][1])
+        }
+  
+      //console.log(Object.entries(this.getBackupData()).filter())
+    }
   }
+  
+
     fetchDataFromFile() {
         let savedData;
         try {
@@ -192,7 +257,7 @@ class database extends EventEmitter{
         writeFileWithDirs(JSON.stringify(this.data, null, 2), this.jsonFilePath);
     }
     yedekle() {
-      if(fs.readFileSync(this.backup) == "") {
+      /*if(fs.readFileSync(this.backup) == "") {
         var a = ""
         var b = JSON.stringify(this.bdata)
       }else if(fs.readFileSync(this.backup) == "{}") {
@@ -205,8 +270,17 @@ class database extends EventEmitter{
       //console.log(`${a} ve ${b}`)
       fs.writeFile(this.backup, `${a}\n${b}`, "utf-8", (err) => {
         if (err) throw err;
-      });
-  }
+      });*/
+      /*writeFileWithDirs(JSON.stringify(this.bdata, null, 2), this.backup);*/
+      const name = Object.entries(this.bdata)[Object.entries(this.bdata).length == 0 ? 0 : Object.entries(this.bdata).length - 1][0]
+      const inside = Object.entries(this.bdata)[Object.entries(this.bdata) == 0 ? 0 : Object.entries(this.bdata).length - 1][1]
+      const backupData = Object.entries(JSON.parse(fs.readFileSync(this.backup, "utf-8"))).length == 0 ? {} : Object.entries(JSON.parse(fs.readFileSync(this.backup, "utf-8")))[0]
+      const data = JSON.parse(fs.readFileSync(this.backup, "utf-8"))
+      data[name] = inside
+      //console.log(data)
+        fs.writeFileSync(this.backup,JSON.stringify(data,null,2),"utf-8")
+      //this.backupdata = JSON.parse(fs.readFileSync(this.backup, "utf-8"))
+    }
     get(key) {
         if(!key) {
           throw Error("❌ FalsisDB Hatası: Veri Tabanından Çekilecek Veri Bulunamadı. Lütfen Çekmek İstediğiniz Veriyi Girin.")
@@ -239,6 +313,7 @@ class database extends EventEmitter{
     }
 
     set(key, value) {
+     // console.log(this.backupcount)
        const old = this.data[key]
         if(!key) {
           throw Error("❌ FalsisDB Hatası: Veri Tabanı Dosyasına Eklenecek Veri Bulunamadı. Lütfen Eklemek İstediğiniz Verinin İsmini Girin.")
@@ -257,28 +332,77 @@ class database extends EventEmitter{
         this.check = data
         this.willBeExecutedDatas.push(data)
           //console.log(this.check)
-        if(this.backup == false){}else{
-          this.backupcount += 1
-          this.backupdata[key] = value
-          this.backupkeys.push(key)
-          this.backupvalues.push(value)
-          if(this.backupcount == this.btime){
-            this.backupcount = 0
-            if(this.btype == "json") {
-              this.bdata[`Back-Up-${this.bcount}`] = {
+        
+        /*this.lastBackupData.backupDB.set("backupcount", "0")
+        this.lastBackupData.backupDB.set("count", "0")
+        this.lastBackupData.backupDB.set("lastData", {})*/
+      if(this.backup==false){}else {
+          //this.backupdata[key] = value
+          /*this.backupkeys.push(key)
+          this.backupvalues.push(value)*/
+
+   //console.log(Object.entries(this.backupdata))
+              //console.log(Object.entries(this.dataStore).filter(x=>arrayIncludes(this.backupkeys,x[0])))
+          //console.log(Object.entries(this.dataStore)[0])
+          //console.log(Object.entries(this.backupkeys).filter(x=>arrayIncludes(Object.entries(this.dataStore)[0],x[0])))
+          //console.log(arrayIncludes(Object.entries(this.lastBackupData.backupDB.get("lastData")).length == 0 ? [] : Object.entries(this.lastBackupData.backupDB.get("lastData"))[0],key))          
+          //Object.entries(this.getBackupData()).filter()
+     if(!arrayIncludes(this.backupkeys, key) && !arrayIncludes(Object.entries(this.lastBackupData.backupDB.get("lastData")).length == 0 ? [] : Object.entries(this.lastBackupData.backupDB.get("lastData")).map(x=>x[0]),key)){
+          this.dataStore[key] = value
+       const o = this.lastBackupData.backupDB.get("lastData")
+    //console.log(this.dataStore)
+    /*o[Object.entries(this.dataStore)[0][0]] = Object.entries(this.dataStore)[0][1]*/
+          o[key] = value
+            this.lastBackupData.backupDB.set("lastData",o)
+       this.backupcount = String(parseInt(this.backupcount)+1)
+this.lastBackupData.backupDB.set("backupcount",String(parseInt(this.lastBackupData.backupDB.get("backupcount"))+1))
+          } 
+
+          if(JSON.parse(fs.readFileSync("./falsisdb/backupData.json","utf-8")).lastData[key] != undefined && JSON.parse(fs.readFileSync("./falsisdb/backupData.json","utf-8")).lastData[key] != value && Object.entries(this.getBackupData()).filter(x=>arrayIncludes(x,key) && arrayIncludes(x,value)).length == 0){
+            //console.log()
+            this.dataStore[key] = value
+       const o = this.lastBackupData.backupDB.get("lastData")
+    
+    //o[Object.entries(this.dataStore)[0][0]] = Object.entries(this.dataStore)[0][1]
+            o[key]=value
+          this.lastBackupData.backupDB.set("lastData",o)
+       this.backupcount = String(parseInt(this.backupcount)+1)
+this.lastBackupData.backupDB.set("backupcount",String(parseInt(this.lastBackupData.backupDB.get("backupcount"))+1))
+          }
+          //console.log(Object.entries(this.dataStore))//console.log(Object.entries(this.dataStore))
+//console.log(Object.entries(data))   
+  
+
+          //console.log(Object.entries(this.backupdata))
+          if(this.backupcount == this.btime && Object.entries(this.dataStore).length != 0){
+            this.backupcount = 0;
+            this.lastBackupData.backupDB.set("backupcount","0")
+            //console.log(Object.entries(this.backupdata))
+              if(Object.entries(this.dataStore).length != 0){      
+              this.bdata[`Back-Up-${this.lastBackupData.backupDB.get("count")}`] = {
                 date: formatDate(new Date()),
-                keys: this.backupkeys,
-                values: this.backupvalues,
-                data:this.backupdata
+                /*keys: this.backupkeys,
+                values: this.backupvalues,*/
+                data:this.lastBackupData.backupDB.get("lastData")
               }
-              this.yedekle();
-            }else if(this.btype == "txt") {
+            this.yedekle();
+                console.log("📝 Falsisdb Bilgilendirme: Yedekleme Alındı. Yedek ismi: Back-Up-" + this.lastBackupData.backupDB.get("count") + ".")
+                this.lastBackupData.backupDB.set("lastData",{})
+                this.lastBackupData.backupDB.set("count",String(parseInt(this.lastBackupData.backupDB.get("count"))+1))
+                if(Object.entries(this.backupdata).length != 0){  
+      this.backupkeys = Object.entries(this.getBackupData()).map(x=>x[0])
+
+      this.backupvalues = Object.entries(this.getBackupData()).map(x=>x[1])
+
+        }
+            }
+            /*else if(this.btype == "txt") {
               fs.writeFile(this.backup, `${fs.readFileSync(this.backup)}\nBack-Up-${this.bcount} | ${formatDate(new Date())} | ${this.backupkeys} | ${this.backupvalues}`, "utf-8", (err) => {
                 if (err) throw err;
               });
-            }
-            console.log("📝 Falsisdb Bilgilendirme: Yedekleme Alındı. Yedek ismi: Back-Up-" + this.bcount + ".")
-            fs.writeFileSync(__dirname.slice(0, -4) + "/falsisdb/development.json", JSON.stringify(JSON.parse(`{"backupcount": ${Number(this.bcount) + 1}}`)))
+            }*/
+            
+            //fs.writeFileSync(__dirname.slice(0, -4) + "/falsisdb/development.json", JSON.stringify(JSON.parse(`{"backupcount": ${Number(this.bcount) + 1}}`)))
           }
         }
         }
@@ -419,11 +543,9 @@ class database extends EventEmitter{
     clear() {
         this.data = {};
         this.kaydet();
-                if(clearfunc){
-        eval(clearfunc)  //dataClear event created by falsis
-        }
     }
    get info(){
+     console.log(this.backupdata)
         return{
             name: "falsisdb",
             type: "JsonDatabase",
