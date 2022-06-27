@@ -4,15 +4,29 @@ Falsisdb; Türkçe, hızlı, güvenilir, kullanışlı, açık kaynak kodlu, eve
 
 ## Kurulum
 
-Modülü kurmak için öncelikle konsola aşağıdaki komutu yazmalısınız. (İsterseniz Github Branch'dan da çekebilirsiniz.)
+Modülü kurmak için öncelikle konsola aşağıdaki komutu yazmalısınız.
 
 ```bash
 npm i falsisdb@latest
 ```
 
+veya bunun yerine en en güncel sürümü github'dan çekin. (Hatalar olabilir.)
+
+```bash
+npm i "https://github.com/falsisdev/falsisdb.git#master"
+```
+
 Bunu yazdıktan sonra modülün indirilmesiniz bekleyin. Modül kurulunca `main (ana)` dosyanıza aşağıdaki kodu ekleyin. Kodu en başa eklerseniz dosyanız düzenli olur.
 
-```javascript
+## Yedekleme Sistemi ve Daha Fazlası 
+
+Yedekleme sisteminin amacı, ana veri tabanı dosyasına herhangi bir zarar gelirse veri tabanını kolayca yedek dosyasında saklaması. Bunun üzerine **Peki ya yedek dosyasına zarar gelirse?** tarzı bir soru gelebilir. Bunun için yedek sistemine `backupTime` ekledik. Örneğin veri tabanına 1 veri eklediğinizde veri anında yedeğe atılmıyor da ayarladığınız sayı kadar veri eklendiğinde yeni bir yedek oluşturup o zaman yedeği atıyor. Böylece yedek dosyası, ana veri tabanı dosyası kadar hareketli ve risk altında olmuyor.
+
+Şimdi biraz kullanımından bahsedelim. Kullanımından Bahsetmeden Önce birkaç şey hatırlatmak istiyorum.
+1. Yedek Sistemindeki tüm ögeler ve nesneler isteğe bağlıdır.
+2. Yedek Sistemi aktif olduğunda, `falsisdb` klasöründe `backupData.json` dosyası oluşacaktır. Bu dosyada kaç tane backup alındığı, 1 başlatma sürecinde kaç veri kaydedildiği (`time` kısmı için kullanılıyor.) ve eğer 1 başlatma sürecinde kaydedilen veri sayısı tanımlanan `time` değerine eşit değilse eşit olana kadar kaydedilen verilerin yedeği tutulur. Böylece proje kaç kere yeniden başlatılsa bile hiçbir şey sıfırlanmaz. Eğer bir veri önceden yedeklendiyse veya yedekleme sırasına konulduysa tekrar yedeklenmez veya yedekleme sırasına konulmaz. Bu bir hata değil, bilinçli yapılmış bir özelliktir. Ayrıca eğer bir veriyi veri tabanından silerseniz, bu veri yedek dosyasında bulunmaya devam eder. Böylece eğer sildiğiniz veriyi yanlışlıkla sildiyseniz veya veri kendiliğinden silindiyse yedekleme dosyasından tekrar alabilirsiniz.<br>
+
+```js
 const falsisdb = require("falsisdb");
 const db = new falsisdb({
     filePath: "BURAYA VERI TABANI DOSYASININ DOSYA KONUMU YAZILACAK", //isteğe bağlı
@@ -38,8 +52,8 @@ const db = new falsisdb({
 Yukarıdaki Paragraftaki tüm ögeler ve nesneler isteğe bağlıdır. Eğer Yazılmazsa Aşağıdakiler Uygulanır.<br>
 Veri Tabanı Dosyası: Varsayılanı `./falsisdb/database.json`<br>
 Yedekleme: Eğer hiçbir şey tanımlanmazsa yedekleme alınmaz. Ancak Aşağıdakilerden Herhangi Biri Bile Tanımlanırsa Varsayılanlar Aşağıdaki Gibi Olur. <br>
-Yedekleme Dosyası: Varsayılanı `./falsisdb/backup.txt` (Uzantı girilen tipe göre değişir.)<br>
-Yedekleme Dosyası Türü: Varsayılanı `txt` (Tür Girilen Dosyanın Uzantısına Göre Değişir.)<br>
+Yedekleme Dosyası: Varsayılanı `./falsisdb/backup.json`<br>
+Yedekleme Dosyası Türü: Varsayılanı `json`<br>
 Yedekleme Aralığı: Varsayılanı `5` veride bir.<br>
 Event Interval: Varsayılan `100` milisaniyede bir.<br><br>
 
