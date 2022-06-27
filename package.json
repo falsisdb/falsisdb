@@ -1,7 +1,7 @@
 {
   "name": "falsisdb",
-  "version": "2.2.7",
-  "description": "Falsisdb, quick.db benzeri, açık kaynak kodlu ve kullanışlı database modülü. Bir database modülünde gereken herşeyi, hatta daha fazlasını içeriyor!",
+  "version": "2.3.0",
+  "description": "Falsisdb; Türkçe, hızlı, güvenilir, kullanışlı, açık kaynak kodlu, event ve yedekleme destekli, json database modülü.",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "keywords": [
@@ -14,7 +14,8 @@
     "Database",
     "quickdb",
     "mongoose",
-    "mongodb"
+    "mongodb",
+    "wiodb"
   ],
   "author": "falsis",
   "license": "Apache-2.0",
