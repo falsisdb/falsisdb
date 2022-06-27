@@ -325,7 +325,7 @@ this.lastBackupData.backupDB.set("count", "0")
         this.kaydet();
         const data = {
           key: key,
-          changed: old == this.data[key] ? false : true,
+          changed: old == undefined ? false : this.data[key] == old ? false : true,
           oldValue: old,
           value: value
         }
