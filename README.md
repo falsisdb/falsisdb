@@ -66,10 +66,9 @@ dataSet eventi bir veri eklendiğinde tetiklenecek kodu tanımlamak için kullan
 ```js
 db.on("dataSet", (data) => {
     if(data.changed == true){
-        console.log(`📝 Veri Tabanında Bir Veri Değiştirildi\n- Veri İsmi: ${data.key}\n- Eski Değeri: ${data.oldValue}\n- Yeni Değeri: ${data.value}`) //eğer veri değiştirildiyse
-    }else if(data.changed == false){
-        console.log(`📝 Veri Tabanında Bir Veri Eklendi\n- Veri İsmi: ${data.key}\n- Veri Değeri: ${data.value}`) //eğer veri yeni eklendiyse
+        console.log(`📝 Veri Tabanında Bir Veri Değiştirildi\n- Veri İsmi: ${data.key}\n- Eski Değeri: ${data.oldValue}\n- Yeni Değeri: ${data.value}`) 
     }
+    console.log(data)
 })
 ```
 
