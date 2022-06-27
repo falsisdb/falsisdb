@@ -31,11 +31,9 @@ const falsisdb = require("falsisdb");
 const db = new falsisdb({
     filePath: "BURAYA VERI TABANI DOSYASININ DOSYA KONUMU YAZILACAK", //isteğe bağlı
     backupPath: "BURAYA YEDEKLEME DOSYASININ DOSYA KONUMU YAZILACAK", //isteğe bağlı LÜTFEN backup[} KULLANILIYORSA BU KISMI KULLANMAYIN
-    backupType: "BURAYA YEDEKLEME DOSYASININ TÜRÜ YAZILACAK | json veya txt (json önerilir)", //isteğe bağlı LÜTFEN backup[} KULLANILIYORSA BU KISMI KULLANMAYIN
     backupTime: 5, //BURAYA YEDEKLEMENIN KAÇ VERIDE BIR YAPILACAGI YAZILACAK VARSAYILAN = 5 //isteğe bağlı LÜTFEN backup[} KULLANILIYORSA BU KISMI KULLANMAYIN
     backup: { //isteğe bağlı
         path: "BURAYA YEDEKLEME DOSYASININ DOSYA KONUMU YAZILACAK", //isteğe bağlı
-        type: "BURAYA YEDEKLEME DOSYASININ TÜRÜ YAZILACAK | json veya txt (json önerilir)", //isteğe bağlı
         time: 5 //BURAYA YEDEKLEMENIN KAÇ VERIDE BIR YAPILACAGI YAZILACAK VARSAYILAN = 5 //isteğe bağlı
     },
     eventInterval: 100 //BURAYA EVENTLERIN KAC MILISANIYEDE (MS) BIR KONTROL EDİLECEĞİ YAZILACAK VARSAYILAN = 100ms //isteğe bağlı
@@ -46,14 +44,12 @@ const db = new falsisdb({
 `backupPath`, `backupType` ve `backupTime` ögeleri `backup` nesnesine göre arka plandadır. Eğer `backup` nesnesini kullanıyorsanız; `backupPath`, `backupType` ve `backupTime` ögelerini kullanmayın. Bir hata almazsınız ancak gereksiz olur ve önerilmez.<br>
 `backup` nesnesi `type`, `path` ve `time` ögelerini içerir.<br>
 `backupPath` veya `backup.path`: Yedekleme Alınacak Dosyayı Tanımlar.<br>
-`backupType` veya `backup.type`: Yedekleme Alınacak Dosyanın Türünü Tanımlar.<br>
 `backupTime` veya `backup.time`: Yedeklemenin Kaç Veride Bir Yapılacağını Tanımlar.<br>
 `eventInterval`: Eventlerin ne kadar sürede bir kontrol edileceğini tanımlar<br><br>
 Yukarıdaki Paragraftaki tüm ögeler ve nesneler isteğe bağlıdır. Eğer Yazılmazsa Aşağıdakiler Uygulanır.<br>
 Veri Tabanı Dosyası: Varsayılanı `./falsisdb/database.json`<br>
 Yedekleme: Eğer hiçbir şey tanımlanmazsa yedekleme alınmaz. Ancak Aşağıdakilerden Herhangi Biri Bile Tanımlanırsa Varsayılanlar Aşağıdaki Gibi Olur. <br>
 Yedekleme Dosyası: Varsayılanı `./falsisdb/backup.json`<br>
-Yedekleme Dosyası Türü: Varsayılanı `json`<br>
 Yedekleme Aralığı: Varsayılanı `5` veride bir.<br>
 Event Interval: Varsayılan `100` milisaniyede bir.<br><br>
 
