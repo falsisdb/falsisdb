@@ -545,7 +545,7 @@ this.lastBackupData.backupDB.set("backupcount",String(parseInt(this.lastBackupDa
         this.kaydet();
     }
    get info(){
-     console.log(this.backupdata)
+     //console.log(this.backupdata)
         return{
             name: "falsisdb",
             type: "JsonDatabase",
