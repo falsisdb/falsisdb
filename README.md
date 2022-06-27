@@ -59,42 +59,29 @@ Event Interval: Varsayılan `100` milisaniyede bir.<br><br>
 
 ## Event Sistemi
 
-`type`: event türünü belirler
-`status`: aktif olup olmadığını belirler
-`code`: event devreye girdiğinde çalıştırılacak kod
-
-- Ready
-Ready Eventi Proje Başlatıldığında Yapılacak Kodu Tanımlamacak İçin Kullanılır.
-```js
-db.on({
-    type: "ready",
-    status:"aktif",
-    code:`console.log("Ready eventi çalışıyor")`
-})
-```
-
 - DataSet
+
 dataSet eventi bir veri eklendiğinde tetiklenecek kodu tanımlamak için kullanılr.
+
 ```js
-db.on({
-	type:"dataSet",
-	status:"aktif",
-	code:`console.log("Veri tabanına %value% değeri olan %key% verisi eklendi")`
+db.on("dataSet", (data) => {
+    if(data.changed == true){
+        console.log(`📝 Veri Tabanında Bir Veri Değiştirildi\n- Veri İsmi: ${data.key}\n- Eski Değeri: ${data.oldValue}\n- Yeni Değeri: ${data.value}`) //eğer veri değiştirildiyse
+    }else if(data.changed == false){
+        console.log(`📝 Veri Tabanında Bir Veri Eklendi\n- Veri İsmi: ${data.key}\n- Veri Değeri: ${data.value}`) //eğer veri yeni eklendiyse
+    }
 })
 ```
 
 - DataDelete
+
 dataDelete eventi bir veri silindiğinde tetiklenecek kodu tanımlamak için kullanılr.
+
 ```js
-db.on({
-	type:"dataDelete",
-	status:"aktif",
-	code:`console.log("Veri tabanından %value% değeri olan %key% verisi silindi.")`
+db.on("dataDelete", (data) => {
+        console.log(`📝 Veri Tabanında Bir Veri Silindi\n- Veri İsmi: ${data.key}\n- Eski Değeri: ${data.value}`)
 })
 ```
-
-`%key%`: İşleme Giren Veri İsmi
-`%value%`: İşleme Giren Veri Değeri
 
 ## Geliştirme
 
