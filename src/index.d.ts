@@ -1,5 +1,5 @@
 declare class falsisdb {
-    constructor(); void;
+    constructor(): void;
     fetchDataFromFile(): void;
     kaydet(key: any, value: any, type: any): void;
     get(key: string): any;
