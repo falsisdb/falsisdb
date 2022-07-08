@@ -1,13 +1,7 @@
 const falsis = require("./src/index.js")
 const db = new falsis({
-filePath: "./falsisdb/database.json",
-backup: {
-	path: "./falsisdb/backup.txt",
-	time: 5
-}
+filePath: "./falsisdb/database.yaml",
+fileType: "yaml"
 })
-db.set("l", "m")
-db.set("n", "o")
-db.set("p", "r")
-db.set("s", "t")
-db.set("u", "v")
+db.set("test", "testt")
+console.log(db.has("test", true))
