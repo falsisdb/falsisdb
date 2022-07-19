@@ -225,7 +225,6 @@ let result = Boolean(this.data[key]);
         if(!key) {
           throw Error("❌ FalsisDB Hatası: Veri Tabanı Dosyasınan Silinmek İstenen Veri Bulunamadı. Lütfen Silinecek Veriyi Girin.")
         } else {
-          console.log("c")
         delete this.data[key];
         this.kaydet(undefined,undefined,"delete");
         this.eventData.deleteEventCheck = {
