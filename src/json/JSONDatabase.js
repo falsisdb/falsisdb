@@ -395,10 +395,10 @@ let result = Boolean(this.data[key]);
         return{
             name: "falsisdb",
             type: "JSONDatabase",
-            version: "2.3.0",
+            version: "2.3.1",
             owner: "falsisdev",
-            developers: ["falsisdev", "lunexdev", "berat141"],
-            github: "https://github.com/falsisdev/falsisdb",
+            developers: ["falsisdev", "berat141"],
+            github: "https://github.com/falsisdb/falsisdb",
             pathfile: this.jsonFilePath,
             backupfile: construct.backup.path,
             backuptime: construct.backup.time,
