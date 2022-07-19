@@ -1,4 +1,4 @@
-declare class falsisdb {
+declare class JSONDatabase  {
     constructor();
     fetchDataFromFile(): void;
     kaydet(key: any, value: any, type: any): void;
@@ -24,4 +24,4 @@ declare class falsisdb {
     clear(): void;
 }
 
-export = falsisdb;
+export = JSONDatabase;
