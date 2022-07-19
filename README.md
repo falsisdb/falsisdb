@@ -27,11 +27,9 @@ Yedekleme sisteminin amacı, ana veri tabanı dosyasına herhangi bir zarar geli
 2. Yedek Sistemi aktif olduğunda, `falsisdb` klasöründe `backupData.json` dosyası oluşacaktır. Bu dosyada kaç tane backup alındığı, 1 başlatma sürecinde kaç veri kaydedildiği (`time` kısmı için kullanılıyor.) ve eğer 1 başlatma sürecinde kaydedilen veri sayısı tanımlanan `time` değerine eşit değilse eşit olana kadar kaydedilen verilerin yedeği tutulur. Böylece proje kaç kere yeniden başlatılsa bile hiçbir şey sıfırlanmaz. Eğer bir veri önceden yedeklendiyse veya yedekleme sırasına konulduysa tekrar yedeklenmez veya yedekleme sırasına konulmaz. Bu bir hata değil, bilinçli yapılmış bir özelliktir. Ayrıca eğer bir veriyi veri tabanından silerseniz, bu veri yedek dosyasında bulunmaya devam eder. Böylece eğer sildiğiniz veriyi yanlışlıkla sildiyseniz veya veri kendiliğinden silindiyse yedekleme dosyasından tekrar alabilirsiniz.<br>
 
 ```js
-const falsisdb = require("falsisdb");
-const db = new falsisdb({
+const { JSONDatabase } = require("falsisdb");
+const db = new JSONDatabase({
     filePath: "BURAYA VERI TABANI DOSYASININ DOSYA KONUMU YAZILACAK", //isteğe bağlı
-    backupPath: "BURAYA YEDEKLEME DOSYASININ DOSYA KONUMU YAZILACAK", //isteğe bağlı LÜTFEN backup[} KULLANILIYORSA BU KISMI KULLANMAYIN
-    backupTime: 5, //BURAYA YEDEKLEMENIN KAÇ VERIDE BIR YAPILACAGI YAZILACAK VARSAYILAN = 5 //isteğe bağlı LÜTFEN backup[} KULLANILIYORSA BU KISMI KULLANMAYIN
     backup: { //isteğe bağlı
         path: "BURAYA YEDEKLEME DOSYASININ DOSYA KONUMU YAZILACAK", //isteğe bağlı
         time: 5 //BURAYA YEDEKLEMENIN KAÇ VERIDE BIR YAPILACAGI YAZILACAK VARSAYILAN = 5 //isteğe bağlı
@@ -40,16 +38,17 @@ const db = new falsisdb({
 })
 ```
 
+Not: `{ JSONDatabase }` kısmı veri tabanının türünü belirler. Bunu isteğe bağlı olarak `{ YAMLDatabase }` ile de değiştirebilirsiniz. Ancak bu değişiklik sonrasında `filePath` ögesinin de uzantısını değiştirmeniz gerekir. Aksi takdirde bir hata ile karşılaşırsınız. Aynı şekilde `new`'den sonraki kısım da  `{}` içerisindeki kısımla aynı olmalı.
+
 `filePath` ögesi isteğe bağlıdır. Unutmayın, dosya başına `./` konmalıdır! Proje Başlatıldığında `Unexpected end of JSON input` hatasını alabilrisiniz. Bunun sebebi dosyaya `{}` \(suslü parantez\) koymamanız. Dosyaya girip içerisine `{}` yazın. Ve artık kullanmaya başlayabilirsiniz.<br>
-`backupPath`, `backupType` ve `backupTime` ögeleri `backup` nesnesine göre arka plandadır. Eğer `backup` nesnesini kullanıyorsanız; `backupPath`, `backupType` ve `backupTime` ögelerini kullanmayın. Bir hata almazsınız ancak gereksiz olur ve önerilmez.<br>
 `backup` nesnesi `type`, `path` ve `time` ögelerini içerir.<br>
-`backupPath` veya `backup.path`: Yedekleme Alınacak Dosyayı Tanımlar.<br>
-`backupTime` veya `backup.time`: Yedeklemenin Kaç Veride Bir Yapılacağını Tanımlar.<br>
+`backup.path`: Yedekleme Alınacak Dosyayı Tanımlar.<br>
+`backup.time`: Yedeklemenin Kaç Veride Bir Yapılacağını Tanımlar.<br>
 `eventInterval`: Eventlerin ne kadar sürede bir kontrol edileceğini tanımlar<br><br>
 Yukarıdaki Paragraftaki tüm ögeler ve nesneler isteğe bağlıdır. Eğer Yazılmazsa Aşağıdakiler Uygulanır.<br>
-Veri Tabanı Dosyası: Varsayılanı `./falsisdb/database.json`<br>
+Veri Tabanı Dosyası: Varsayılanı `./falsisdb/database.json` veya `./falsisdb/database.yaml`<br>
 Yedekleme: Eğer hiçbir şey tanımlanmazsa yedekleme alınmaz. Ancak Aşağıdakilerden Herhangi Biri Bile Tanımlanırsa Varsayılanlar Aşağıdaki Gibi Olur. <br>
-Yedekleme Dosyası: Varsayılanı `./falsisdb/backup.json`<br>
+Yedekleme Dosyası: Varsayılanı `./falsisdb/backupData.json` veya `./falsisdb/backupData.yaml`<br>
 Yedekleme Aralığı: Varsayılanı `5` veride bir.<br>
 Event Interval: Varsayılan `100` milisaniyede bir.<br><br>
 
