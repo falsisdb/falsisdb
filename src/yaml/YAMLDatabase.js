@@ -491,10 +491,9 @@ return data.length > 0 ? true : false
          return this.data
         }
 
-        find(fn, thisArg) {
+        find(fn) {
            this.fetchDataFromFile()
 let res = {};
-if(thisArg) fn = fn.bind(thisArg);
 for(const [key,val] of Object.entries(this.data)){
 if(fn(val,key,this.data)){
 res[key] = val
@@ -503,10 +502,9 @@ break;
 }
 return res
 }
-filter(fn, thisArg) {
+filter(fn) {
   this.fetchDataFromFile()
 let res = {};
-if(thisArg) fn = fn.bind(thisArg);
 for(const [key,val] of Object.entries(this.data)){
 if(fn(val,key,this.data))
 res[key] = val
@@ -514,9 +512,8 @@ res[key] = val
 return res
 }
 
-filterKey(fn, thisArg) {
+filterKey(fn) {
 let res = {};
-if(thisArg) fn = fn.bind(thisArg);
 for(const [key,val] of Object.entries(this.data)){
 if(fn(key,val,this.data))
 res[key] = val
@@ -524,9 +521,8 @@ res[key] = val
 return res
 }
 
-findKey(fn, thisArg) {
+findKey(fn) {
 let res = {};
-if(thisArg) fn = fn.bind(thisArg);
 for(const [key,val] of Object.entries(this.data)){
 if(fn(key,val,this.data)){
 res[key] = val
