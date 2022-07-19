@@ -39,6 +39,7 @@ const db = new JSONDatabase({
 ```
 
 Not: `{ JSONDatabase }` kısmı veri tabanının türünü belirler. Bunu isteğe bağlı olarak `{ YAMLDatabase }` ile de değiştirebilirsiniz. Ancak bu değişiklik sonrasında `filePath` ögesinin de uzantısını değiştirmeniz gerekir. Aksi takdirde bir hata ile karşılaşırsınız. Aynı şekilde `new`'den sonraki kısım da  `{}` içerisindeki kısımla aynı olmalı.
+Not: `TypeScript` için de kullanım bu şekildedir.
 
 `filePath` ögesi isteğe bağlıdır. Unutmayın, dosya başına `./` konmalıdır! Proje Başlatıldığında `Unexpected end of JSON input` hatasını alabilrisiniz. Bunun sebebi dosyaya `{}` \(suslü parantez\) koymamanız. Dosyaya girip içerisine `{}` yazın. Ve artık kullanmaya başlayabilirsiniz.<br>
 `backup` nesnesi `type`, `path` ve `time` ögelerini içerir.<br>
