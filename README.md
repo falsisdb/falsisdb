@@ -48,7 +48,7 @@ Not: `{ JSONDatabase }` kısmı veri tabanının türünü belirler. Bunu isteğ
 Yukarıdaki Paragraftaki tüm ögeler ve nesneler isteğe bağlıdır. Eğer Yazılmazsa Aşağıdakiler Uygulanır.<br>
 Veri Tabanı Dosyası: Varsayılanı `./falsisdb/database.json` veya `./falsisdb/database.yaml`<br>
 Yedekleme: Eğer hiçbir şey tanımlanmazsa yedekleme alınmaz. Ancak Aşağıdakilerden Herhangi Biri Bile Tanımlanırsa Varsayılanlar Aşağıdaki Gibi Olur. <br>
-Yedekleme Dosyası: Varsayılanı `./falsisdb/backupData.json` veya `./falsisdb/backupData.yaml`<br>
+Yedekleme Dosyası: Varsayılanı `./falsisdb/backup.json` veya `./falsisdb/backup.yaml`<br>
 Yedekleme Aralığı: Varsayılanı `5` veride bir.<br>
 Event Interval: Varsayılan `100` milisaniyede bir.<br><br>
 
