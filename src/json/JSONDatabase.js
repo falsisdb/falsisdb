@@ -108,6 +108,7 @@ class JSONDatabase extends EventEmitter{
         if(!fs.existsSync(this.jsonFilePath) || !fs.lstatSync(this.jsonFilePath).isFile()){
       writeFileWithDirs("{}",this.jsonFilePath);
     }
+    if(construct.backup){
         if(construct.backup && construct.backup.path) {
           let backupFile = construct.backup.path.split(".")
     if(backupFile[backupFile.length-1] != "json"){
@@ -115,7 +116,7 @@ class JSONDatabase extends EventEmitter{
     }
           
           this.backup = new Backup({
-            path:construct.backup.path,
+            path:construct.backup.path || "./falsisdb/backup.json",
             time:construct.backup.time || 5,
             logging:log
           })
@@ -141,6 +142,7 @@ class JSONDatabase extends EventEmitter{
     }*/
     //console.log(set)
    // this.lastBackupData.backupDB.set = set
+    }
     }
     this.fetchDataFromFile()
   }
