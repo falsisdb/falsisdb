@@ -68,9 +68,6 @@ class YAMLDatabase extends EventEmitter{
     if(file[file.length-1] == "yaml"? false : file[file.length-1] == "yml" ? false:true){
       throw Error("❌ FalsisDB Hatası: Girilen veri tabanı dosyasının uzantısı yaml veya yml değil")
     }
-    if(construct.backup && !construct.backup.path){
-      throw Error("❌ FalsisDB Hatası: Backup dosyası girilmemiş.")
-    }
     setInterval(() => {
       if(this.eventData.check != null){
         for(const data of this.eventData.willBeExecutedDatas) {
@@ -108,13 +105,15 @@ class YAMLDatabase extends EventEmitter{
         if(!fs.existsSync(this.jsonFilePath) || !fs.lstatSync(this.jsonFilePath).isFile()){
       writeFileWithDirs("{}",this.jsonFilePath);
     }
-        if(construct.backup && construct.backup.path) {
+        if(construct.backup) {
+          if(construct.backup.path){
           let backupFile = construct.backup.path.split(".")
     if(backupFile[backupFile.length-1] == "yaml"? false : backupFile[backupFile.length-1] == "yml" ? false:true){
       throw Error("❌ FalsisDB Hatası: Girilen veri tabanı dosyasının uzantısı yaml veya yml değil")
     }
+          }
           this.backup = new Backup({
-            path:construct.backup.path,
+            path:construct.backup.path || "./falsisdb/backup.yaml",
             time:construct.backup.time || 5,
             logging:log
           })
