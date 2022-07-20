@@ -272,7 +272,7 @@ class YAMLDatabase extends EventEmitter {
         if (!count) {
             throw Error("❌ FalsisDB Hatası: Veri ile Çarpma İşlemine Sokmak İstediğiniz Değer Bulunamadı. Lütfen İşleme Sokmak İstediğiniz Verinin İsmini Girin.")
         }
-        if (isNaN(this.data[key]) == true) {
+        if (isNaN(parseInt(this.data[key])) == true) {
             throw Error("❌ FalsisDB Hatası: Veri ile Çarpma İşlemine Sokmak İstediğiniz Değer Bir Sayı Olmalı. Lütfen İşleme Sokmak İstediğiniz Veriyi Sayı Formatında Girin.")
         }
         if (!this.data[key]) {
@@ -297,7 +297,7 @@ class YAMLDatabase extends EventEmitter {
         if (!count) {
             throw Error("❌ FalsisDB Hatası: Veri ile Bölme İşlemine Sokmak İstediğiniz Değer Bulunamadı. Lütfen İşleme Sokmak İstediğiniz Verinin İsmini Girin.")
         }
-        if (isNaN(this.data[key]) == true) {
+        if (isNaN(parseInt(this.data[key])) == true) {
             throw Error("❌ FalsisDB Hatası: Veri ile Bölme İşlemine Sokmak İstediğiniz Değer Bir Sayı Olmalı. Lütfen İşleme Sokmak İstediğiniz Veriyi Sayı Formatında Girin.")
         }
         if (!this.data[key]) {
@@ -322,7 +322,7 @@ class YAMLDatabase extends EventEmitter {
         if (!count) {
             throw Error("❌ FalsisDB Hatası: Veri ile Toplama İşlemine Sokmak İstediğiniz Değer Bulunamadı. Lütfen İşleme Sokmak İstediğiniz Verinin İsmini Girin.")
         }
-        if (isNaN(this.data[key]) == true) {
+        if (isNaN(parseInt(this.data[key])) == true) {
             throw Error("❌ FalsisDB Hatası: Veri ile Toplama İşlemine Sokmak İstediğiniz Değer Bir Sayı Olmalı. Lütfen İşleme Sokmak İstediğiniz Veriyi Sayı Formatında Girin.")
         }
         if (!this.data[key]) {
@@ -347,7 +347,7 @@ class YAMLDatabase extends EventEmitter {
         if (!count) {
             throw Error("❌ FalsisDB Hatası: Veri ile Çıkarma İşlemine Sokmak İstediğiniz Değer Bulunamadı. Lütfen İşleme Sokmak İstediğiniz Verinin İsmini Girin.")
         }
-        if (isNaN(this.data[key]) == true) {
+        if (isNaN(parseInt(this.data[key])) == true) {
             throw Error("❌ FalsisDB Hatası: Veri ile Çıkarma İşlemine Sokmak İstediğiniz Değer Bir Sayı Olmalı. Lütfen İşleme Sokmak İstediğiniz Veriyi Sayı Formatında Girin.")
         }
         if (!this.data[key]) {
