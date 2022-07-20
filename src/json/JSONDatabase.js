@@ -65,9 +65,6 @@ class JSONDatabase extends EventEmitter{
     this.eventData.backupCheck = null;
     this.eventData.willBeExecutedBackupDatas = [];
     let file = this.jsonFilePath.split(".")
-    if(construct.backup && !construct.backup.path){
-      throw Error("❌ FalsisDB Hatası: Backup dosyası girilmemiş.")
-    }
     if(file[file.length-1] != "json"){
       throw Error("❌ FalsisDB Hatası: Girilen veri tabanı dosyasının uzantısı json değil")
     }
@@ -114,7 +111,7 @@ class JSONDatabase extends EventEmitter{
     if(backupFile[backupFile.length-1] != "json"){
       throw Error("❌ FalsisDB Hatası: Girilen veri tabanı dosyasının uzantısı json değil")
     }
-          
+        }
           this.backup = new Backup({
             path:construct.backup.path || "./falsisdb/backup.json",
             time:construct.backup.time || 5,
@@ -142,7 +139,6 @@ class JSONDatabase extends EventEmitter{
     }*/
     //console.log(set)
    // this.lastBackupData.backupDB.set = set
-    }
     }
     this.fetchDataFromFile()
   }
