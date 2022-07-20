@@ -397,7 +397,7 @@ let result = Boolean(this.data[key]);
         return{
             name: "falsisdb",
             type: "JSONDatabase",
-            version: "2.3.1",
+            version: "2.3.2",
             owner: "falsisdev",
             developers: ["falsisdev", "berat141"],
             github: "https://github.com/falsisdb/falsisdb",
