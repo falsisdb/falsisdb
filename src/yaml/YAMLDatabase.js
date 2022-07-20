@@ -169,13 +169,8 @@ class YAMLDatabase extends EventEmitter {
         if (!key) {
             throw Error("❌ FalsisDB Hatası: Veri Tabanından Çekilecek Veri Bulunamadı. Lütfen Çekmek İstediğiniz Veriyi Girin.")
         } else {
-            if (this.constructFileType == "yaml") {
-                let arr = YAML.parse(fs.readFileSync(this.jsonFilePath, 'utf-8'))
-                return Object.entries(arr).filter(x => Object.entries(x[1])[0][0] == key)[0][1][key]
-            } else {
                 return this.data[key];
             }
-        }
     }
     has(key, returnDatas = false) {
         if (!key) throw Error("❌ FalsisDB Hatası: Veri Tabanında Varlığı Kontrol Edilecek Veri Bulunamadı. Lütfen Şartlanacak Veriyi Girin.")
