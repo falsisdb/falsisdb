@@ -3,7 +3,7 @@
   "version": "2.3.2",
   "description": "Falsisdb; Türkçe, hızlı, güvenilir, kullanışlı, açık kaynak kodlu, event ve yedekleme destekli, json ve yaml database modülü.",
   "main": "./src/index.js",
-  "type": "module",
+  "types": "./src/index.d.ts",
   "keywords": [
     "db",
     "database",
