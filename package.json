@@ -28,7 +28,8 @@
   },
   "homepage": "https://github.com/falsisdev/falsisdb#readme",
   "dependencies": {
-    "events": "^3.3.0"
+    "events": "^3.3.0",
+    "yaml": "^2.1.1"
   },
   "devDependencies": {},
   "scripts": {
