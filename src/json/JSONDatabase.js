@@ -183,6 +183,7 @@ class JSONDatabase extends EventEmitter {
             const data = {
                 key: key,
                 changed: old == undefined ? false : this.data[key] == old ? false : true,
+                newAdded:old == undefined,
                 oldValue: old,
                 value: value
             }
