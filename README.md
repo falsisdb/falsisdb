@@ -42,7 +42,7 @@ Not: `{ JSONDatabase }` kısmı veri tabanının türünü belirler. Bunu isteğ
 Not: `TypeScript` için de kullanım bu şekildedir.
 
 `filePath` ögesi isteğe bağlıdır. Unutmayın, dosya başına `./` konmalıdır! Proje Başlatıldığında `Unexpected end of JSON input` hatasını alabilrisiniz. Bunun sebebi dosyaya `{}` \(suslü parantez\) koymamanız. Dosyaya girip içerisine `{}` yazın. Ve artık kullanmaya başlayabilirsiniz.<br>
-`backup` nesnesi `type`, `path` ve `time` ögelerini içerir.<br>
+`backup` nesnesi `path` ve `time` ögelerini içerir.<br>
 `backup.path`: Yedekleme Alınacak Dosyayı Tanımlar.<br>
 `backup.time`: Yedeklemenin Kaç Veride Bir Yapılacağını Tanımlar.<br>
 `eventInterval`: Eventlerin ne kadar sürede bir kontrol edileceğini tanımlar<br><br>
@@ -64,7 +64,10 @@ db.on("dataSet", (data) => {
     if(data.changed == true){
         console.log(`📝 Veri Tabanında Bir Veri Değiştirildi\n- Veri İsmi: ${data.key}\n- Eski Değeri: ${data.oldValue}\n- Yeni Değeri: ${data.value}`) 
     }
-    console.log(data)
+    if(data.newAdded == true){
+    console.log(`📝 Veri Tabanına Bir Veri Eklendi\n- Veri İsmi: ${data.key}\n- Veri Değeri: ${data.value}`) 
+    }
+    console.log(data) 
 })
 ```
 
