@@ -20,7 +20,7 @@ Bunu yazdıktan sonra modülün indirilmesiniz bekleyin. Modül kurulunca `main 
 
 ## Yedekleme Sistemi ve Daha Fazlası 
 
-Yedekleme sisteminin amacı, ana veri tabanı dosyasına herhangi bir zarar gelirse veri tabanını kolayca yedek dosyasında saklaması. Bunun üzerine **Peki ya yedek dosyasına zarar gelirse?** tarzı bir soru gelebilir. Bunun için yedek sistemine `backupTime` ekledik. Örneğin veri tabanına 1 veri eklediğinizde veri anında yedeğe atılmıyor da ayarladığınız sayı kadar veri eklendiğinde yeni bir yedek oluşturup o zaman yedeği atıyor. Böylece yedek dosyası, ana veri tabanı dosyası kadar hareketli ve risk altında olmuyor.
+Yedekleme sisteminin amacı, ana veri tabanı dosyasına herhangi bir zarar gelirse veri tabanını kolayca yedek dosyasında saklaması. Bunun üzerine **Peki ya yedek dosyasına zarar gelirse?** tarzı bir soru gelebilir. Bunun için yedek sistemine `time` nesnesi ekledik. Örneğin veri tabanına 1 veri eklediğinizde veri anında yedeğe atılmıyor da ayarladığınız sayı kadar veri eklendiğinde yeni bir yedek oluşturup o zaman yedeği atıyor. Böylece yedek dosyası, ana veri tabanı dosyası kadar hareketli ve risk altında olmuyor.
 
 Şimdi biraz kullanımından bahsedelim. Kullanımından Bahsetmeden Önce birkaç şey hatırlatmak istiyorum.
 1. Yedek Sistemindeki tüm ögeler ve nesneler isteğe bağlıdır.
