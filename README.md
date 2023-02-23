@@ -85,7 +85,7 @@ db.on("dataDelete", (data) => {
 
 <img src="https://cdn.discordapp.com/attachments/775822548519616562/989824612697264178/falsisdb_0DE118C.png">
 
-Teşekkürler: [lunexdev](https://github.com/lunexdev), [berat141](https://github.com/berat141), [aloima](https://github.com/aloima), [iamashley0](https://github.com/iamashley0)
+Teşekkürler: [berat141](https://github.com/berat141), [aloima](https://github.com/aloima)
 
 ![](https://img.shields.io/github/v/release/falsisdev/falsisdb?style=for-the-badge) ![](https://img.shields.io/github/stars/falsisdev/falsisdb?style=for-the-badge) ![](https://img.shields.io/github/forks/falsisdev/falsisdb?style=for-the-badge)
 

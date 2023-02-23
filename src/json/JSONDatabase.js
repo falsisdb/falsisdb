@@ -385,8 +385,8 @@ class JSONDatabase extends EventEmitter {
             developers: ["falsisdev", "berat141"],
             github: "https://github.com/falsisdb/falsisdb",
             pathfile: this.jsonFilePath,
-            backupfile: construct.backup.path,
-            backuptime: construct.backup.time,
+            backupfile: this.log ? this.construct.backup.path : 'Ayarlanmamış.',
+            backuptime: this.log ? this.construct.backup.time : 5,
             lastdata: {
                 data: this.lastData,
                 type: this.lastDataType

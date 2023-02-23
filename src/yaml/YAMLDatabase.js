@@ -390,7 +390,6 @@ class YAMLDatabase extends EventEmitter {
         this.kaydet(undefined, undefined, "clear");
     }
     get info() {
-        //console.log(this.backupdata)
         return {
             name: "falsisdb",
             type: "YAMLDatabase",
@@ -399,8 +398,8 @@ class YAMLDatabase extends EventEmitter {
             developers: ["falsisdev", "berat141"],
             github: "https://github.com/falsisdb/falsisdb",
             pathfile: this.jsonFilePath,
-            backupfile: construct.backup.path,
-            backuptime: construct.backup.time,
+            backupfile: this.log ? this.construct.backup.path : 'Ayarlanmamış.',
+            backuptime: this.log ? this.construct.backup.time : 5,
             lastdata: {
                 data: this.lastData,
                 type: this.lastDataType
@@ -486,7 +485,8 @@ class YAMLDatabase extends EventEmitter {
         this.fetchDataFromFile()
         return this.data
     }
-
+    ////////////////////////////////////////// ALL (...) //////////////////////////////////////////
+    ////////////////////////////////////////// find()  //////////////////////////////////////////
     find(fn) {
         this.fetchDataFromFile()
         let res = {};
@@ -498,6 +498,8 @@ class YAMLDatabase extends EventEmitter {
         }
         return res
     }
+    ////////////////////////////////////////// find()  //////////////////////////////////////////
+    ////////////////////////////////////////// FILTERS  //////////////////////////////////////////
     filter(fn) {
         this.fetchDataFromFile()
         let res = {};
@@ -507,7 +509,6 @@ class YAMLDatabase extends EventEmitter {
         }
         return res
     }
-
     filterKey(fn) {
         let res = {};
         for (const [key, val] of Object.entries(this.data)) {
@@ -527,5 +528,6 @@ class YAMLDatabase extends EventEmitter {
         }
         return res
     }
+    ////////////////////////////////////////// FILTERS  //////////////////////////////////////////
 }
 module.exports = YAMLDatabase;
