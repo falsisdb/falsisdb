@@ -3,9 +3,8 @@ const {
     YAMLDatabase
 } = require("./src/index.js")
 
-const db = new JSONDatabase({
-    filePath: "./falsisdb/database.json"
+const db = new YAMLDatabase({
+    filePath: "./falsisdb/database.yaml"
 })
 
-db.set("hello", "world")
-db.set("posts", [{ id: 1 }])
+console.log(db.set("test1", "testt"))
