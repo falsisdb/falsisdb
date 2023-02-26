@@ -1,5 +1,5 @@
 declare module 'falsisdb' {
-    interface Database  {
+    class Database  {
         constructor(options?: {filePath?: string, backup?: any, time?: number});
         get(key: string): any;
         has(key: string, returnDatas: boolean): boolean;
@@ -23,5 +23,5 @@ declare module 'falsisdb' {
         clear(): void;
     }
 }
-export class JSONDatabase implements Database { }
-export class YAMLDatabase implements Database { }
+export class JSONDatabase extends Database { }
+export class YAMLDatabase extends Database { }
