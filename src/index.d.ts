@@ -1,6 +1,6 @@
 declare module 'falsisdb' {
     export class JSONDatabase  {
-        constructor();
+        constructor(options?: {filePath?: string, backup?: any, time?: number});
         fetchDataFromFile(): void;
         kaydet(key: any, value: any, type: any): void;
         get(key: string): any;
@@ -26,7 +26,7 @@ declare module 'falsisdb' {
     }
 
     export class YAMLDatabase  {
-        constructor();
+        constructor(options?: {filePath?: string, backup?: any, time?: number});
         fetchDataFromFile(): void;
         kaydet(key: any, value: any, type: any): void;
         get(key: string): any;
