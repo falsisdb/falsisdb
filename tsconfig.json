@@ -8,5 +8,5 @@
     "moduleResolution": "node",
     "lib": ["es6"]
   },
-  "files": ["./src/json/JSONDatabase.d.ts", "./src/yaml/YAMLDatabase.d.ts"]
+  "files": ["./src/index.d.ts"]
 }
